@@ -1,0 +1,113 @@
+[{
+        "titulo": "Aquaman",
+        "imagen": "aquaman.jpg",
+        "url": "../pages/player.html",
+        "categoria": "dc",
+        "youtube": "FR1V6iRB02w"
+    },
+    {
+        "titulo": "Avengers Infinity war",
+        "imagen": "avengers-infinity.png",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "823iAZOEKt8"
+    },
+    {
+        "titulo": "Batman vs superman",
+        "imagen": "batman-superman.jpg",
+        "url": "../pages/player.html",
+        "categoria": "dc",
+        "youtube": "NMWAWljzj8M"
+    },
+    {
+        "titulo": "Black Panther",
+        "imagen": "black-panther.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "JcIye2DaZwI"
+    },
+    {
+        "titulo": "Capitana Marvel",
+        "imagen": "capitana-marvel.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "6XkN-MFNZpI"
+    },
+    {
+        "titulo": "Capitán América",
+        "imagen": "capitan-america.jpeg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "VsUjjLNUBJs"
+    },
+    {
+        "titulo": "Dr Strange",
+        "imagen": "dr-strange.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "PqTILYUNU3s"
+    },
+    {
+        "titulo": "Avengers Endgame",
+        "imagen": "endgame.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "PyakRSni-c0"
+    },
+    {
+        "titulo": "Justice League",
+        "imagen": "justice-league.jpg",
+        "url": "../pages/player.html",
+        "categoria": "dc",
+        "youtube": "v74c80jHqs4"
+    },
+    {
+        "titulo": "Spider-Man Homecoming",
+        "imagen": "spiderman-1.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "sfPWvYKKAJ4"
+    },
+    {
+        "titulo": "Spider-Fan Far from home",
+        "imagen": "spiderman-2.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "5Bq5zJGI0Ec"
+    },
+    {
+        "titulo": "Thor",
+        "imagen": "thor.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "UPcruM4CUak"
+    },
+    {
+        "titulo": "Thor – Un Mundo Oscuro",
+        "imagen": "thor-2.jpg",
+        "url": "../pages/player.html",
+        "categoria": "marvel",
+        "youtube": "jmVa1kNDnWA"
+    },
+    {
+        "titulo": "Wonder Woman",
+        "imagen": "wonder-woman.jpg",
+        "url": "../pages/player.html",
+        "categoria": "dc",
+        "youtube": "KcIY-JLxSn4"
+    },
+    {
+        "titulo": "Wonder Woman 1984",
+        "imagen": "wonder-woman-1984.jpg",
+        "url": "../pages/player.html",
+        "categoria": "dc",
+        "youtube": "w9IE5apTPrc"
+    },
+    {
+        "titulo": "Shazam",
+        "imagen": "shazam.jpg",
+        "url": "../pages/player.html",
+        "categoria": "dc",
+        "youtube": "ntdtE_1S7n0"
+    }
+]
