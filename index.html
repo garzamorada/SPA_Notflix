@@ -10,7 +10,15 @@
 </head>
 
 <body>
-    <div id="contenedor">aca va a ir el contenido</div>
+    <div id="contenedor">
+        <select name="categorias" v-model="filtercategoria">
+        <option selected disabled >Filtrar Películas</option>
+        <option value="todas">Todas</option>
+        <option value="marvel">Marvel</option>
+        <option value="dc">DC</option>
+    </select>
+        <movie v-for="pelicula in filtroCategoria" :titulo="pelicula.titulo" :youtube="pelicula.youtube" :imagen="pelicula.imagen" :categoria="pelicula.categoria"></movie>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../js/data.js"></script>
 </body>
