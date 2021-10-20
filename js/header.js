@@ -1,55 +1,37 @@
-import navbar from "./config.js"
+/*import {navbar} from "../js/config.js"*/
 
 var plantilla = `
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="logo">
-        <div class="fondo_logo"><i class="fas fa-play-circle"></i>Notflix</div>
-    </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" :href="link"><i :class="iclass"></i>{{nombre}}</a>
-            </li>
-        </ul>
-    </div>
-</nav>`;
+            <li class="nav-item" v-on:click="actual = nombre">
+                <a class="nav-link" href="#"><i :class="iclass"></i>{{nombre}}</a>
+            </li>`;
 
-const barra = {
+export const barra = {
     props: ['link', 'nombre', 'iclass'],
     template: `${plantilla}`,
 }
 
-new Vue({
-    el: '#contenedorPeliculas',
-    mounted() {
-        axios.get(this.json)
-            .then(respuesta => this.peliculas = respuesta.data)
-            .catch(error => console.error(error));
-    },
+/*new Vue({
+    el: '#container',
     data: {
-        filtercategoria: "",
-        json: "../js/peliculas.json",
-        peliculas: []
+       items: navbar,
+       actual: current,
+       logueado: logued,
     },
     computed: {
-        filtroCategoria() {
-            if (this.filtercategoria != null && this.filtercategoria != '' && this.filtercategoria != 'todas') {
-                return this.peliculas.filter(pelicula => {
-                    return pelicula.categoria === this.filtercategoria;
-                })
+        filtroItems() {
+            if (this.logueado) {
+                return this.items.filter(item => {
+                return (item.nombre != this.actual && (item.requiereLogin == true || item.requiereLogin == null))
+            });
             } else {
-                return this.peliculas;
+                return this.items.filter(item => {
+                return (item.nombre != this.actual &&  (item.requiereLogin == false || item.requiereLogin == null))
+            });
             }
-
         }
     },
     components: {
-        movie,
+        barra,
     }
 
-})
-
-Vue.config.devtools = true;
+})*/

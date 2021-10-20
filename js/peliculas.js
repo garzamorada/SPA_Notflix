@@ -1,5 +1,5 @@
 var plantilla = `
-<figure class="peliculas movie-mostrar" :class=categoria>
+<figure class="col-6 col-sm-4 col-md-3 col-xl-2 peliculas" >
     <a :href="urlhref">
         <img :src="urlimg">
     </a>
