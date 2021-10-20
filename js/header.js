@@ -1,24 +1,25 @@
-var plantilla = `
-<figure class="peliculas movie-mostrar" :class=categoria>
-    <a :href="urlhref">
-        <img :src="urlimg">
-    </a>
-    <figcaption>
-        {{titulo}}
-    </figcaption>
-</figure>`;
+import navbar from "./config.js"
 
-const movie = {
-    props: ['youtube', 'titulo', 'imagen', 'categoria'],
+var plantilla = `
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="logo">
+        <div class="fondo_logo"><i class="fas fa-play-circle"></i>Notflix</div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" :href="link"><i :class="iclass"></i>{{nombre}}</a>
+            </li>
+        </ul>
+    </div>
+</nav>`;
+
+const barra = {
+    props: ['link', 'nombre', 'iclass'],
     template: `${plantilla}`,
-    computed: {
-        urlhref() {
-            return '../pages/player.html?youtube=' + this.youtube + '&titulo=' + this.titulo;
-        },
-        urlimg() {
-            return '../assets/peliculas/' + this.imagen;
-        }
-    }
 }
 
 new Vue({

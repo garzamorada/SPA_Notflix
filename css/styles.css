@@ -1,0 +1,70 @@
+:root {
+    --bg1: black;
+    --bg2: #cc0000;
+    --fontColor: white;
+    --borderColor: white;
+    --shadowColor: black;
+    --formBgColor: #222222;
+    --inputBgColor: #333333;
+}
+
+body {
+    background-color: black;
+}
+
+.container {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--bg2);
+    padding: 0;
+    margin: 0;
+}
+
+nav {
+    background-color: var(--bg2);
+}
+
+nav button {
+    cursor: pointer;
+    user-select: none;
+}
+
+nav a {
+    color: var(--fontColor) !important;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+    user-select: none;
+    padding: 5px !important;
+}
+
+nav a:hover {
+    background-color: var(--bg1);
+}
+
+.logo {
+    display: inline-block;
+    font-family: 'Exo 2';
+    margin-right: 20px;
+}
+
+.fondo_logo {
+    display: inline-block;
+    font-size: calc(1.5vw + 1.5vh + 1vmin);
+    color: var(--fontColor);
+    margin-left: 10px;
+    margin-right: 10px;
+    text-shadow: var(--shadowColor) 1px 1px 4px;
+    background-image: url('../assets/images/fondo_notflix.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    user-select: none;
+}
+
+.logo i {
+    margin-right: 10px;
+}
