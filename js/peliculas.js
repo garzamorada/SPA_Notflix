@@ -1,4 +1,4 @@
-var plantilla = `
+const tplMovie = `
 <figure class="col-6 col-sm-4 col-md-3 col-xl-2 peliculas" >
     <a :href="urlhref">
         <img :src="urlimg">
@@ -9,8 +9,8 @@ var plantilla = `
 </figure>`;
 
 const movie = {
+    template:`${tplMovie}`,
     props: ['youtube', 'titulo', 'imagen', 'categoria'],
-    template: `${plantilla}`,
     computed: {
         urlhref() {
             return '../pages/player.html?youtube=' + this.youtube + '&titulo=' + this.titulo;
@@ -22,7 +22,7 @@ const movie = {
 }
 
 
-var tplMovies = `
+const tplMovies = `
 <div id="contenedorPeliculas">
     <div class="filtro">
         <select v-model="filtercategoria">

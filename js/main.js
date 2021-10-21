@@ -1,8 +1,9 @@
 import { navbar } from "../js/config.js"
 import { barra } from "../js/header.js"
 import { movies } from "../js/peliculas.js"
+import { signup } from "../js/registro.js"
 
-var logued = true;
+var logued = false;
 
 var tplIndex = `
 <h2>Home</h2>
@@ -59,8 +60,10 @@ new Vue({
         movies,
         contact,
         barra,
+        signup,
     }
 
 })
 
 Vue.config.devtools = true;
+
