@@ -8,7 +8,8 @@
     --inputBgColor: #333333;
 }
 
- /** {  border: greenyellow 1px dotted; } */
+
+/** {  border: greenyellow 1px dotted; } */
 
 body {
     background-color: black;
@@ -54,14 +55,22 @@ nav a {
     cursor: pointer;
     padding: 10px 10px !important;
     min-height: 30px;
-
 }
 
 nav a:hover {
     background-color: var(--bg1);
 }
+
 nav i {
     margin-right: 10px;
+}
+
+nav .activa {
+    background-color: black !important;
+}
+
+nav .inactiva {
+    background-color: #cc0000;
 }
 
 .logo {
@@ -88,8 +97,13 @@ nav i {
     margin-right: 10px;
 }
 
+
 /***************************************************/
+
+
 /*              LISTA PELICULAS                    */
+
+
 /***************************************************/
 
 section {
@@ -145,6 +159,7 @@ figure a:hover~figcaption {
     padding-top: 5px;
     padding-right: 5px;
 }
+
 .filtro select {
     background-color: #333333;
     border: #fff solid 1px;

@@ -21,17 +21,35 @@ const movie = {
     }
 }
 
-new Vue({
-    el: '#contenedorPeliculas',
+
+var tplMovies = `
+<div id="contenedorPeliculas">
+    <div class="filtro">
+        <select v-model="filtercategoria">
+            <option value="" selected disabled>Filtrar Películas</option>
+            <option value="todas">Todas</option>
+            <option value="marvel">Marvel</option>
+            <option value="dc">DC</option>
+        </select>
+    </div>
+    <section class="row g-3">
+        <movie v-for="pelicula in filtroCategoria" :titulo="pelicula.titulo" :youtube="pelicula.youtube" :imagen="pelicula.imagen" :categoria="pelicula.categoria"></movie>
+    </section>
+</div>`;
+
+export const movies = {
     mounted() {
         axios.get(this.json)
             .then(respuesta => this.peliculas = respuesta.data)
             .catch(error => console.error(error));
     },
-    data: {
-        filtercategoria: "",
-        json: "../js/peliculas.json",
-        peliculas: []
+    template: `${tplMovies}`,
+    data: function() {
+        return {
+            filtercategoria: "",
+            json: "../js/peliculas.json",
+            peliculas: [],
+        }
     },
     computed: {
         filtroCategoria() {
@@ -42,13 +60,9 @@ new Vue({
             } else {
                 return this.peliculas;
             }
-
-        }
+        },
     },
     components: {
-        movie,
+        movie
     }
-
-})
-
-Vue.config.devtools = true;
+}

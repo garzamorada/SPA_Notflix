@@ -1,37 +1,42 @@
-import {navbar} from "../js/config.js"
-import {barra} from "../js/header.js"
+import { navbar } from "../js/config.js"
+import { barra } from "../js/header.js"
+import { movies } from "../js/peliculas.js"
 
 var logued = true;
-var current = "Home";
 
-var plantilla1 = `
-<h2>Pagina 1</h2>
+var tplIndex = `
+<h2>Home</h2>
 `;
-var plantilla2 = `
-<h2>Pagina 2</h2>
-`;
-var plantilla3 = `
-<h2>Pagina 3</h2>
+var tplContact = `
+<h2>Contacto</h2>
 `;
 
-const Home = {
-    template: `${plantilla1}`,
+const index = {
+    template: `${tplIndex}`,
 }
-const Peliculas = {
-    template: `${plantilla2}`,
-}
-const Contacto = {
-    template: `${plantilla3}`,
+const contact = {
+    template: `${tplContact}`,
 }
 
 
 new Vue({
     el: '#container',
     data: {
-        actual: "Home",
+        actual: "index",
         items: navbar,
-        actual: current,
         logueado: logued,
+    },
+    methods: {
+        cambiaPagina(val) {
+            this.actual = val;
+        },
+        seleccionado(link) {
+            if (this.actual == link) {
+                return 'activa';
+            } else {
+                return 'inactiva';
+            }
+        },
     },
     computed: {
         paginaActual() {
@@ -40,17 +45,20 @@ new Vue({
         filtroItems() {
             if (this.logueado) {
                 return this.items.filter(item => {
-                return (item.nombre != this.actual && (item.requiereLogin == true || item.requiereLogin == null))
-            });
+                    return (item.requiereLogin == true || item.requiereLogin == null)
+                });
             } else {
                 return this.items.filter(item => {
-                return (item.nombre != this.actual &&  (item.requiereLogin == false || item.requiereLogin == null))
-            });
+                    return (item.requiereLogin == false || item.requiereLogin == null)
+                });
             }
-        }
+        },
     },
     components: {
-        Home, Peliculas, Contacto, barra,
+        index,
+        movies,
+        contact,
+        barra,
     }
 
 })
