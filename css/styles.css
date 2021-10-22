@@ -190,7 +190,7 @@ figure a:hover~figcaption {
 
 /**********************************************************/
 
-.registro {
+.registro, .login {
     margin: 30px;
     padding: 20px;
     background-color: var(--formBgColor);
@@ -200,9 +200,22 @@ figure a:hover~figcaption {
     text-align: left;
 }
 
-.registro>div {
+.registro>div, .login>div {
     margin-top: 20px;
     min-height: 3rem;
+}
+
+.login .campo {
+    min-width: 95%;
+    min-height: 2.25rem;
+}
+.login label {
+    min-width: 5%;
+    min-height: 2.25rem;
+}
+.login .titulo, .registro .titulo {
+    text-align: center;
+    font-size: 1.5rem;
 }
 
 :focus-visible {
@@ -211,26 +224,8 @@ figure a:hover~figcaption {
 
 .campo,
 input,
-input:focus,
-input:active,
-input:active:valid,
-input:active:invalid,
-input:focus:valid,
-input:focus:invalid,
 select,
-select:focus,
-select:active,
-select:focus:valid,
-select:focus:invalid,
-select:active:valid,
-select:active:invalid,
-textarea,
-textarea:focus,
-textarea:active,
-textarea:focus:invalid,
-textarea:focus:valid,
-textarea:active:invalid,
-textarea:active:valid {
+textarea {
     background-color: var(--inputBgColor);
     border-radius: 5px;
     color: white;
@@ -242,7 +237,7 @@ textarea:active:valid {
 }
 
 .campodefault {
-    border: solid 1px var(--borderColor);
+   /* border: solid 1px var(--borderColor);*/
 }
 
 .campook {
@@ -271,8 +266,8 @@ textarea:active:valid {
 }
 
 .boton {
-    background-color: #cc0000;
-    border: solid 1px rgb(44, 0, 0);
+    background-color: var(--bg2);
+    border: none;
     border-radius: 5px;
     color: white;
     font-size: 1rem;
@@ -283,9 +278,10 @@ textarea:active:valid {
 }
 
 .boton:active {
-    background-color: black;
+    background-color: var(--bg1);
+    border:none;
     position: relative;
-    box-shadow: 0 0 0;
+    box-shadow: 0 0 1px 1px var(--borderColor);
     top: -2px;
     left: 2px;
 }
