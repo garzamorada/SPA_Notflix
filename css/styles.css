@@ -238,7 +238,7 @@ textarea:active:valid {
     font-size: 0.75rem;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    box-shadow: var(--shadowColor);
+    box-shadow: inset 0px 0px 6px 1px var(--shadowColor);
 }
 
 .campodefault {
@@ -279,7 +279,7 @@ textarea:active:valid {
     font-family: 'Open Sans', sans-serif;
     text-decoration: none;
     padding: 5px;
-    box-shadow: black 1px 1px 4px;
+    box-shadow: inset 0px 0px 4px 1px var(--shadowColor);
 }
 
 .boton:active {
