@@ -42,14 +42,52 @@
         </header>
         <div id="main">
             <component :is="paginaActual"></component>
-                
-                <form class="row g-3 login" action="../pages/login.html" method="GET">
-                    <div class="col-sm-12 titulo">Ingreso de usuarios</div>
-                    <div class="col-sm-12 col-md-6 col-xl-4"><label><i class="fas fa-at"></i></label><input class="campo" type="email" name="email" placeholder="usuario@dominio.com" required></div>
-                    <div class="col-sm-12 col-md-6 col-xl-4"><label><i class="fas fa-key"></i></label><input class="campo" type="password" name="clave" placeholder="contraseña" required></div>
-                    <div class="col-sm-12 col-md-6 col-xl-4"><label><i class="fas fa-sign-in-alt"></i></label><input type="submit" name="submit" class="boton" value="Ingresar" onclick="userLogin(document.getElementsByName('email')[0].value);"></div>
-                </form>
         </div>
+        <form id="options" class="row g-3 options" action="https://www.w3schools.com/action_page.php" method="POST"
+            target="__blank">
+            <div class="col-sm-12 titulo">
+                Opciones de Usuario
+            </div>
+            <div class="col-6"><label>Enviar notificaciones por correo electrónico:</label></div>
+            <div class="col-6">
+                <label class="switch">
+                    <input name="SuscripCorreo" type="checkbox" value="si">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-6"><label>Enviar notificaciones por celular:</label></div>
+            <div class="col-6">
+                <label class="switch">
+                    <input name="SuscripCelular" type="checkbox" value="si">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="col-6"><label>Cambiar correo electrónico:</label></div>
+            <div class="col-6"><input class="campo" name="email" type="email" placeholder="e-mail: usuario@dominio.com">
+            </div>
+            <div class="col-6"><label>Cambiar número de celular:</label></div>
+            <div class="col-6"><input class="campo" name="celular" type="tel"
+                    pattern="[0-9]{2,4}-?\s?[0-9]{3,4}-?\s?[0-9]{3,4}"
+                    placeholder="Celular (sin 0 y sin 15): 11-4321-6789"></div>
+            <div class="col-6"><label>Cambiar companía de celular:</label></div>
+            <div class="col-6" name="proveedor">
+                <select class="campo" name="proveedor">
+                    <option selected disabled value="">Proveedor de Telefonía...</option>
+                    <option value="Movistar">Movistar</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Claro">Claro</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="col-6"><label>Cambiar contraseña:</label></div>
+            <div class="col-6"><input class="campo" type="password" name="Clave" id="Clave" pattern="[0-9a-zA-Z^\S]{8,}"
+                    placeholder="Contraseña" onchange="chequeaClave();"></div>
+            <div class="col-6"><label>Confirmar contraseña nueva:</label></div>
+            <div class="col-6"><input class="campo" type="password" name="Confirmar_Clave" id="Confirmar_Clave"
+                    pattern="[0-9a-zA-Z^\S]{8,}" placeholder="Repetir Contraseña" onkeyup="chequeaClave();"></div>
+            <div class="option_no_label"><button name="submit" class="boton " type="submit ">Guardar Cambios</button>
+            </div>
+        </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

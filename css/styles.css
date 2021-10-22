@@ -10,9 +10,6 @@
     --ok: #006600;
 }
 
-
-/** {  border: greenyellow 1px dotted; } */
-
 body {
     background-color: black;
     font-family: 'Open Sans', sans-serif;
@@ -190,7 +187,7 @@ figure a:hover~figcaption {
 
 /**********************************************************/
 
-.registro, .login {
+.registro, .login, .options {
     margin: 30px;
     padding: 20px;
     background-color: var(--formBgColor);
@@ -206,7 +203,7 @@ figure a:hover~figcaption {
 }
 
 .login .campo {
-    min-width: 95%;
+    min-width: 90%;
     min-height: 2.25rem;
 }
 .login label {
@@ -216,6 +213,10 @@ figure a:hover~figcaption {
 .login .titulo, .registro .titulo {
     text-align: center;
     font-size: 1.5rem;
+}
+
+.login .campo {
+    border: solid 1px var(--borderColor);
 }
 
 :focus-visible {
@@ -237,7 +238,7 @@ textarea {
 }
 
 .campodefault {
-   /* border: solid 1px var(--borderColor);*/
+   border: solid 1px var(--borderColor);
 }
 
 .campook {

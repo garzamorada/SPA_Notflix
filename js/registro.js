@@ -1,7 +1,7 @@
 const tplSignup = `
 <form id="registro" class="row g-3 registro"
 action="https://www.w3schools.com/action_page.php" method="POST" target="__blank" v-on:submit="validateForm">
-<div class="col-sm-12 titulo">Ingreso de usuarios</div>
+<div class="col-sm-12 titulo">Alta de usuarios</div>
 <div class="col-sm-12 col-md-6 col-xl-4">
     <input 
     name="nombre"

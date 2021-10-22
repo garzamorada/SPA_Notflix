@@ -2,8 +2,8 @@ import { navbar } from "../js/config.js"
 import { barra } from "../js/header.js"
 import { movies } from "../js/peliculas.js"
 import { signup } from "../js/registro.js"
-
-var logued = false;
+import { login } from "../js/login.js"
+import { logout } from "../js/logout.js"
 
 var tplIndex = `
 <h2>Home</h2>
@@ -21,11 +21,19 @@ const contact = {
 
 
 new Vue({
+    created() {
+        let usuario = localStorage.getItem('usuario');
+        if (usuario != null) {
+            this.logueado= true;
+        } else {
+            this.logueado = false;
+        }
+    },
     el: '#container',
     data: {
         actual: "index",
         items: navbar,
-        logueado: logued,
+        logueado: false,
     },
     methods: {
         cambiaPagina(val) {
@@ -61,6 +69,8 @@ new Vue({
         contact,
         barra,
         signup,
+        login,
+        logout,
     }
 
 })
