@@ -5,19 +5,13 @@ import { signup } from "../js/registro.js"
 import { login } from "../js/login.js"
 import { logout } from "../js/logout.js"
 import { options } from "../js/options.js"
+import { contact } from "../js/contact.js"
 
 var tplIndex = `
 <h2>Home</h2>
 `;
-var tplContact = `
-<h2>Contacto</h2>
-`;
-
 const index = {
     template: `${tplIndex}`,
-}
-const contact = {
-    template: `${tplContact}`,
 }
 
 

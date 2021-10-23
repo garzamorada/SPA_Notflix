@@ -6,7 +6,7 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
     <input 
     name="nombre"
     v-model="nombre"
-    pattern="^[a-zA-Z ]{2,254}$"
+    pattern="^[a-zA-Zá-ü ]{2,254}$"
     type="text" class="campo campodefault" placeholder="Nombres"
         required>
     <div id="nombre" class="ok ocultar">
@@ -17,7 +17,7 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
     <input
     name="apellido"
     v-model="apellido"
-    pattern="^[a-zA-Z ]{2,254}$"
+    pattern="^[a-zA-Zá-ü ]{2,254}$"
      type="text" class="campo campodefault" placeholder="Apellido"
         required>
         <div id="apellido" class="ok ocultar">

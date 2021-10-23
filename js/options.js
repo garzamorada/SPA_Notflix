@@ -42,8 +42,11 @@ const tplOptions = `
     <div id="celular" class="ok ocultar">Todo ok</div>
 </div>
 <div class="col-sm-6 col-xl-3 label"><label>Cambiar companía de celular:</label></div>
-<div class="col-sm-6 col-xl-3" name="proveedor">
-    <select class="campo campodefault" v-model="proveedor" name="proveedor">
+<div class="col-sm-6 col-xl-3 input">
+    <select 
+    class="campo campodefault"
+    v-model="proveedor"
+    name="proveedor">
         <option selected disabled value="">Proveedor de Telefonía...</option>
         <option value="Movistar">Movistar</option>
         <option value="Personal">Personal</option>
