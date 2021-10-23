@@ -4,6 +4,7 @@ import { movies } from "../js/peliculas.js"
 import { signup } from "../js/registro.js"
 import { login } from "../js/login.js"
 import { logout } from "../js/logout.js"
+import { options } from "../js/options.js"
 
 var tplIndex = `
 <h2>Home</h2>
@@ -22,9 +23,12 @@ const contact = {
 
 new Vue({
     created() {
+        if (localStorage.getItem('actual') != null) {
+            this.actual = localStorage.getItem('actual');
+        }
         let usuario = localStorage.getItem('usuario');
         if (usuario != null) {
-            this.logueado= true;
+            this.logueado = true;
         } else {
             this.logueado = false;
         }
@@ -36,8 +40,9 @@ new Vue({
         logueado: false,
     },
     methods: {
-        cambiaPagina(val) {
+        cambiaPaginaActual(val) {
             this.actual = val;
+            console.log(val)
         },
         seleccionado(link) {
             if (this.actual == link) {
@@ -63,6 +68,11 @@ new Vue({
             }
         },
     },
+    watch: {
+        actual(nuevo, viejo) {
+            localStorage.setItem('actual', nuevo);
+        }
+    },
     components: {
         index,
         movies,
@@ -71,9 +81,9 @@ new Vue({
         signup,
         login,
         logout,
+        options,
     }
 
 })
 
 Vue.config.devtools = true;
-

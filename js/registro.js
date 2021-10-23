@@ -38,8 +38,8 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
     <input
     name="celular"
     v-model="celular"
+    pattern="[0-9]{2,4}-?\s?[0-9]{3,4}-?\s?[0-9]{3,4}"
     type="tel" class="campo campodefault"
-        pattern="[0-9]{2,4}-?\s?[0-9]{3,4}-?\s?[0-9]{3,4}"
         placeholder="Celular (sin 0 y sin 15): 11-4321-6789" required>
         <div id="celular" class="ok ocultar">
         Complete un número de teléfono válido
@@ -73,8 +73,9 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
     <input 
     name="password"
     v-model="password"
+    pattern="[0-9a-zA-Z^\S]{8,}"
     type="password" class="campo campodefault"
-        pattern="[0-9a-zA-Z^\S]{8,}" placeholder="Contraseña"required>
+    placeholder="Contraseña"required>
     <div id="password" class="ok ocultar">
         Complete una contraseña de la menos 8 caracteres sin espacios
     </div>
@@ -83,11 +84,12 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
     <input 
     name="confirmpassword"
     v-model="confirmpassword"
+    pattern="[0-9a-zA-Z^\S]{8,}"
     type="password" class="campo campodefault"
-        pattern="[0-9a-zA-Z^\S]{8,}" placeholder="Repetir Contraseña"
+        placeholder="Repetir Contraseña"
         required>
         <div id="confirmpassword" class="ok ocultar">
-        Las contraseñas no coínciden
+        Todo ok
     </div>
 </div>
 <div class="col-sm-6 col-md-6 col-xl-6">
@@ -113,6 +115,39 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
 </form>
 `
 export const signup = {
+    mounted() {
+        if (localStorage.getItem('SuscripCorreo') != null) {
+            this.SuscripCorreo = localStorage.getItem('SuscripCorreo');
+        }
+        if (localStorage.getItem('SuscripCelular') != null) {
+            this.SuscripCelular = localStorage.getItem('SuscripCelular');
+        }
+        if (localStorage.getItem('celular') != null) {
+            this.celular = localStorage.getItem('celular');
+        }
+        if (localStorage.getItem('proveedor') != null) {
+            this.proveedor = localStorage.getItem('proveedor');
+        }
+        if (localStorage.getItem('email') != null) {
+            this.email = localStorage.getItem('email');
+        }
+        if (localStorage.getItem('password') != null) {
+            this.password = localStorage.getItem('password');
+        }
+        if (localStorage.getItem('confirmpassword') != null) {
+            this.confirmpassword = localStorage.getItem('confirmpassword');
+        }
+        if (localStorage.getItem('nombre') != null) {
+            this.nombre = localStorage.getItem('nombre');
+        }
+        if (localStorage.getItem('apellido') != null) {
+            this.apellido = localStorage.getItem('apellido');
+        }
+        if (localStorage.getItem('nacimiento') != null) {
+            this.nacimiento = localStorage.getItem('nacimiento');
+        }
+
+    },
     template: `${tplSignup}`,
     data: function() {
         return {
@@ -141,6 +176,7 @@ export const signup = {
             let modelo = 'confirmpassword';
             let mensajealerta = 'Las contraseñas no coinciden';
             this.validado1 = validaConfirmPassword(nuevo, this.password, modelo, mensajealerta);
+            localStorage.setItem('confirmpassword', this.confirmpassword);
 
         },
         password(nuevo, viejo) {
@@ -150,31 +186,37 @@ export const signup = {
             let mensajealerta2 = 'Las contraseñas no coinciden';
             this.validado2 = validaInput(nuevo, modelo, mensajealerta);
             this.validado1 = validaConfirmPassword(nuevo, this.confirmpassword, modelo2, mensajealerta2);
+            localStorage.setItem('password', nuevo);
         },
         nombre(nuevo, viejo) {
             let modelo = 'nombre';
             let mensajealerta = 'Debe completar el Nombre';
             this.validado3 = validaInput(nuevo, modelo, mensajealerta);
+            localStorage.setItem('nombre', nuevo);
         },
         apellido(nuevo, viejo) {
             let modelo = 'apellido';
             let mensajealerta = 'Debe completar el Apellido';
             this.validado4 = validaInput(nuevo, modelo, mensajealerta);
+            localStorage.setItem('apellido', nuevo);
         },
         celular(nuevo, viejo) {
             let modelo = 'celular';
             let mensajealerta = 'Debe completar el celular';
             this.validado5 = validaInput(nuevo, modelo, mensajealerta);
+            localStorage.setItem('celular', nuevo);
         },
         email(nuevo, viejo) {
             let modelo = 'email';
             let mensajealerta = 'Debe completar un email válido';
             this.validado6 = validaInput(nuevo, modelo, mensajealerta);
+            localStorage.setItem('email', nuevo);
         },
         proveedor(nuevo, viejo) {
             let modelo = 'proveedor';
             let mensajealerta = 'Debe seleccionar un proveedor';
             this.validado7 = validaSelect(nuevo, modelo, mensajealerta);
+            localStorage.setItem('proveedor', nuevo);
         },
         acepta(nuevo, viejo) {
             let modelo = 'acepta';
@@ -185,6 +227,7 @@ export const signup = {
             let modelo = 'nacimiento';
             let mensajealerta = 'Debe completar su fecha de nacimiento';
             this.validado9 = validaDate(nuevo, modelo, mensajealerta);
+            localStorage.setItem('nacimiento', nuevo);
         },
     },
     methods: {
@@ -198,6 +241,17 @@ export const signup = {
                 this.validado7 &&
                 this.validado8 &&
                 this.validado9) {
+                localStorage.setItem('nacimiento', this.nacimiento);
+                localStorage.setItem('email', this.email);
+                localStorage.setItem('usuario', this.email);
+                localStorage.setItem('nombre', this.nombre);
+                localStorage.setItem('apellido', this.apellido);
+                localStorage.setItem('celular', this.celular);
+                localStorage.setItem('proveedor', this.proveedor);
+                localStorage.setItem('password', this.password);
+                localStorage.setItem('confirmpassword', this.password);
+                localStorage.setItem('SuscripCorreo', '');
+                localStorage.setItem('SuscripCelular', '');
                 return true;
             }
             e.preventDefault();
@@ -312,6 +366,7 @@ function validaDate(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
     let valida = false;
+
     if (valor != null && valor != '') {
         elemento.innerText = 'Todo en orden';
         elemento.className = 'mostrar ok';

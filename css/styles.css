@@ -35,6 +35,12 @@ header {
     box-shadow: 0 0 6px black;
 }
 
+main {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
 nav {
     background-color: var(--bg2);
     width: 100%;
@@ -187,7 +193,9 @@ figure a:hover~figcaption {
 
 /**********************************************************/
 
-.registro, .login, .options {
+.registro,
+.login,
+.options {
     margin: 30px;
     padding: 20px;
     background-color: var(--formBgColor);
@@ -197,25 +205,58 @@ figure a:hover~figcaption {
     text-align: left;
 }
 
-.registro>div, .login>div {
+.registro>div,
+.login>div {
     margin-top: 20px;
     min-height: 3rem;
+}
+
+.options .label {
+    min-height: auto;
+    padding-top: 20px;
+}
+
+.options .input {
+    min-height: auto;
+    padding-bottom: 20px;
+}
+
+.options .submit {
+    text-align: center;
 }
 
 .login .campo {
     min-width: 90%;
     min-height: 2.25rem;
 }
+
 .login label {
     min-width: 5%;
     min-height: 2.25rem;
 }
-.login .titulo, .registro .titulo {
+
+.options .campo {
+    min-width: 100%;
+    min-height: 2.25rem;
+}
+
+.options .label {
+    text-align: center;
+}
+
+.options .input {
+    text-align: center;
+}
+
+.login .titulo,
+.registro .titulo,
+.options .titulo {
     text-align: center;
     font-size: 1.5rem;
 }
 
-.login .campo {
+.login .campo,
+.options .campo {
     border: solid 1px var(--borderColor);
 }
 
@@ -238,7 +279,7 @@ textarea {
 }
 
 .campodefault {
-   border: solid 1px var(--borderColor);
+    border: solid 1px var(--borderColor);
 }
 
 .campook {
@@ -280,7 +321,7 @@ textarea {
 
 .boton:active {
     background-color: var(--bg1);
-    border:none;
+    border: none;
     position: relative;
     box-shadow: 0 0 1px 1px var(--borderColor);
     top: -2px;
@@ -374,4 +415,23 @@ input:checked+.slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+@media screen and (min-width: 576px) {
+    .options .label {
+        text-align: right;
+        margin-top: 20px;
+        min-height: 3rem;
+        padding-top: 0;
+    }
+    .options .input {
+        text-align: left;
+        margin-top: 20px;
+        min-height: 3rem;
+        padding-bottom: 0;
+    }
+    .options>div {
+        margin-top: 20px;
+        min-height: 3rem;
+    }
 }
