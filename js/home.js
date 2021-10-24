@@ -2,11 +2,12 @@ const tplIndex = `
 <div class="home">
     <div class="home">
         <div class="titulo">Cartelera de Películas</div>
-        <p class="texto">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae consequatur ab fuga temporibus quidem a odit! Aperiam eum iure quaerat, accusamus nam, placeat itaque facilis voluptates magni porro nulla reprehenderit. 
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.Recusandae assumenda neque facere natus, delectus quasi explicabo rerum earum ullam ab sapiente dolor a temporibus provident!Deleniti aliquid nihil quia hic. 
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae consequatur ab fuga temporibus quidem a odit! Aperiam eum iure quaerat, accusamus nam, placeat itaque facilis voluptates magni porro nulla reprehenderit.
+        <p class="textoTodo">
+            {{muestraTodo}}
         </p>
+        <p class="textoParte">
+        {{muestraParte}}
+        </p><span :class="muestraMas"><a href="#" v-on:click="mostrarMas()">(mostrar {{mostrar}})</a></span>
     </div>
     <div class="content_botones">
         <div class="botones"><a :class="clase" v-on:mouseover="cambiaClase('boton')" v-on:mouseout="cambiaClase('boton gradiente')" href="#"  v-on:click="cambiaPagina('signup')">Registrarse</a></div>
@@ -28,6 +29,12 @@ export const index = {
     data: function() {
         return {
             clase: "boton gradiente",
+            mostrar: "+",
+            largo: 256,
+            puntos: ' (...)',
+            texto: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae consequatur ab fuga temporibus quidem a odit! Aperiam eum iure quaerat, accusamus nam, placeat itaque facilis voluptates magni porro nulla reprehenderit. 
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit.Recusandae assumenda neque facere natus, delectus quasi explicabo rerum earum ullam ab sapiente dolor a temporibus provident!Deleniti aliquid nihil quia hic. 
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae consequatur ab fuga temporibus quidem a odit! Aperiam eum iure quaerat, accusamus nam, placeat itaque facilis voluptates magni porro nulla reprehenderit.`,
         }
     },
     methods: {
@@ -37,5 +44,31 @@ export const index = {
         cambiaClase(clase) {
             this.clase = clase;
         },
+        mostrarMas() {
+            if (this.mostrar == '+') {
+                this.mostrar = '-';
+                this.largo = this.texto.length;
+                this.puntos = '';
+            } else {
+                this.mostrar = '+';
+                this.largo = 256;
+                this.puntos = ' (...)';
+            }
+        },
+    },
+    computed: {
+        muestraTodo() {
+            return this.texto;
+        },
+        muestraParte() {
+            return this.texto.substr(0, this.largo) + this.puntos;
+        },
+        muestraMas() {
+            if (this.texto.length > 256) {
+                return 'mostar';
+            } else {
+                return 'ocultar';
+            }
+        }
     },
 }

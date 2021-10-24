@@ -252,6 +252,7 @@ export const signup = {
                 localStorage.setItem('confirmpassword', this.password);
                 localStorage.setItem('SuscripCorreo', '');
                 localStorage.setItem('SuscripCelular', '');
+                this.$root.actual = 'login';
                 return true;
             }
             e.preventDefault();
