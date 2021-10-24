@@ -14,11 +14,16 @@ body {
     background-color: black;
     font-family: 'Open Sans', sans-serif;
     color: var(--fontColor);
+    background-image: url('../assets/images/movie_bg8_top.jpg');
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 .container {
     min-width: 100%;
     min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
     margin: 0;
     padding: 0;
 }
@@ -185,6 +190,36 @@ figure a:hover~figcaption {
 }
 
 
+/********************************************/
+
+
+/*              player                      */
+
+
+/********************************************/
+
+.iframeMovie {
+    object-fit: cover;
+    width: 90%;
+    height: 90%;
+    min-height: 75vh;
+}
+
+.containerPlayer {
+    min-height: 85vh;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.75);
+    text-align: center;
+}
+
+.containerPlayer .titulo {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 5px;
+}
+
+
 /**********************************************************/
 
 
@@ -317,6 +352,15 @@ textarea {
     text-decoration: none;
     padding: 5px;
     box-shadow: inset 0px 0px 4px 1px var(--shadowColor);
+    text-decoration: none;
+    color: var(--fontColor);
+}
+
+a.boton:hover,
+a.boton:active,
+a.boton {
+    text-decoration: none;
+    color: var(--fontColor);
 }
 
 .boton:active {
@@ -434,4 +478,121 @@ input:checked+.slider:before {
         margin-top: 20px;
         min-height: 3rem;
     }
+}
+
+
+/************************************************/
+
+
+/*               ANIMACIONES                    */
+
+
+/************************************************/
+
+@keyframes gardiente {
+    0% {
+        background-color: #cc0000;
+    }
+    50% {
+        background-color: rgb(44, 0, 0);
+    }
+    75% {
+        background-color: #cc0000;
+    }
+}
+
+
+/* The element to apply the animation to */
+
+.gradiente {
+    animation-name: gardiente;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+}
+
+
+/**********************************/
+
+
+/*         home                   */
+
+
+/**********************************/
+
+.logos {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.logos>div {
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.logos img {
+    height: 40px;
+    width: 100px;
+    background-color: white;
+    box-shadow: white 0 0 10px;
+}
+
+.content_botones {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    justify-content: space-around;
+}
+
+.botones {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.botones .boton {
+    display: block;
+    min-width: 100px;
+}
+
+.home .titulo {
+    max-width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 20px;
+    margin: 0;
+}
+
+.home .texto {
+    max-width: 100%;
+    text-align: justify;
+    font-size: 1rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin: 0;
+}
+
+footer {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    background-color: var(--bg1);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+    margin-top: 50px;
+    min-height: 50px;
+    padding: 20px;
+    width: 100%;
 }

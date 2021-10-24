@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z]+)/([a-zA-Z]+)/([a-z]+-?[a-z]+)/$ index.html?pagina=$1&youtube=$2&titulo=$3 [L]
+RewriteRule ^([a-zA-Z]+)/$ index.html?pagina=$1 [L]
+</IfModule>

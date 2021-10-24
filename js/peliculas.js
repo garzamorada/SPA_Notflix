@@ -9,11 +9,11 @@ const tplMovie = `
 </figure>`;
 
 const movie = {
-    template:`${tplMovie}`,
+    template: `${tplMovie}`,
     props: ['youtube', 'titulo', 'imagen', 'categoria'],
     computed: {
         urlhref() {
-            return '../pages/player.html?youtube=' + this.youtube + '&titulo=' + this.titulo;
+            return 'index.html?pagina=player&youtube=' + this.youtube + '&titulo=' + this.titulo;
         },
         urlimg() {
             return '../assets/peliculas/' + this.imagen;

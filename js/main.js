@@ -6,14 +6,8 @@ import { login } from "../js/login.js"
 import { logout } from "../js/logout.js"
 import { options } from "../js/options.js"
 import { contact } from "../js/contact.js"
-
-var tplIndex = `
-<h2>Home</h2>
-`;
-const index = {
-    template: `${tplIndex}`,
-}
-
+import { player } from "../js/player.js"
+import { index } from "../js/home.js"
 
 new Vue({
     created() {
@@ -26,12 +20,23 @@ new Vue({
         } else {
             this.logueado = false;
         }
+        var post = window.location.search;
+        var parametros = new URLSearchParams(post);
+
+        this.youtube = parametros.get('youtube');
+        this.tituloMovie = parametros.get('titulo');
+        if (parametros.get('pagina') != null & parametros.get('pagina') != '') {
+            this.actual = parametros.get('pagina');
+        }
+
     },
     el: '#container',
     data: {
         actual: "index",
         items: navbar,
         logueado: false,
+        youtube: "",
+        tituloMovie: "",
     },
     methods: {
         cambiaPaginaActual(val) {
@@ -76,6 +81,7 @@ new Vue({
         login,
         logout,
         options,
+        player,
     }
 
 })
