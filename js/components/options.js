@@ -117,7 +117,7 @@ export const options = {
             SuscripCorreo: null,
             SuscripCelular: null,
             celular: "1112345678",
-            proveedor: "claro",
+            proveedor: "Claro",
             email: "usuario@dominio.com",
             password: "12345678",
             confirmpassword: "12345678",
