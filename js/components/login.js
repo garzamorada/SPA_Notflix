@@ -1,3 +1,7 @@
+/**********************************************/
+/*            FORMULARIO DE LOGIN             */
+/**********************************************/
+
 const tplLogin = `
 <form class="row g-3 login" action="https://www.w3schools.com/action_page.php" method="POST" target="__blank" v-on:submit="userLoginLocal">
     <div class="col-sm-12 titulo">Ingreso de usuarios</div>
@@ -17,7 +21,7 @@ const tplLogin = `
 `
 
 export const login = {
-    template:`${tplLogin}`,
+    template: `${tplLogin}`,
     data: function() {
         return {
             email: null,
@@ -25,15 +29,14 @@ export const login = {
         }
     },
     methods: {
+        /* graba el usuario en localstorage y redirecciona a movies */
         userLoginLocal(e) {
-            if (this.email != null &&  this.password != null && this.email != '' &&  this.password != '' )
-            {
+            if (this.email != null && this.password != null && this.email != '' && this.password != '') {
                 try {
                     localStorage.setItem('usuario', this.email);
-                    this.$root.logueado=true;
-                    this.$root.actual='movies';
-                }
-                catch (error) {
+                    this.$root.logueado = true;
+                    this.$root.actual = 'movies';
+                } catch (error) {
                     console.error(error);
                 }
                 return true;

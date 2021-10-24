@@ -1,3 +1,8 @@
+/**********************************************/
+/*          OPCIONES DE CONFIGURACION         */
+/**********************************************/
+
+/* lista de elementos de la barra de navegacion */
 export const navbar = [{
         link: "index",
         iclass: "fas fa-home",

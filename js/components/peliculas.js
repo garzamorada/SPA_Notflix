@@ -1,3 +1,7 @@
+/**********************************************/
+/*               LISTA DE PELICULAS           */
+/**********************************************/
+
 const tplMovie = `
 <figure class="col-6 col-sm-4 col-md-3 col-xl-2 peliculas" >
     <a :href="urlhref">
@@ -8,6 +12,7 @@ const tplMovie = `
     </figcaption>
 </figure>`;
 
+/** genera las figure de las peliculas */
 const movie = {
     template: `${tplMovie}`,
     props: ['youtube', 'titulo', 'imagen', 'categoria'],
@@ -37,6 +42,7 @@ const tplMovies = `
     </section>
 </div>`;
 
+/** importa peliculas.json y maneja el filtro por categoria */
 export const movies = {
     mounted() {
         axios.get(this.json)
@@ -47,7 +53,7 @@ export const movies = {
     data: function() {
         return {
             filtercategoria: "",
-            json: "../js/peliculas.json",
+            json: "../js/data/peliculas.json",
             peliculas: [],
         }
     },

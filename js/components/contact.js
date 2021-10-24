@@ -1,3 +1,7 @@
+/**********************************************/
+/*          FORMULARIO DE CONTACTO            */
+/**********************************************/
+
 const tplContact = `
     <form class="row g-3 options" action="https://www.w3schools.com/action_page.php" method="POST" target="__blank" v-on:submit="validateFormContact($event)">
         <div class="col-12 titulo">
@@ -35,23 +39,24 @@ const tplContact = `
 
 export const contact = {
     mounted() {
-        if (localStorage.getItem('contactEmail') != null) {
-            this.email = localStorage.getItem('contactEmail');
+        /* verifica si hay almacenados datos del usuario y los lee */
+        if (sessionStorage.getItem('contactEmail') != null) {
+            this.email = sessionStorage.getItem('contactEmail');
         } else if (localStorage.getItem('email') != null) {
             this.email = localStorage.getItem('email');
         }
-        if (localStorage.getItem('contactNombre') != null) {
-            this.nombre = localStorage.getItem('contactNombre');
+        if (sessionStorage.getItem('contactNombre') != null) {
+            this.nombre = sessionStorage.getItem('contactNombre');
         } else if (localStorage.getItem('nombre') != null) {
             this.nombre = localStorage.getItem('nombre');
         }
-        if (localStorage.getItem('contactApellido') != null) {
-            this.apellido = localStorage.getItem('contactApellido');
+        if (sessionStorage.getItem('contactApellido') != null) {
+            this.apellido = sessionStorage.getItem('contactApellido');
         } else if (localStorage.getItem('apellido') != null) {
             this.apellido = localStorage.getItem('apellido');
         }
-        if (localStorage.getItem('contactComments') != null) {
-            this.comments = localStorage.getItem('contactComments');
+        if (sessionStorage.getItem('contactComments') != null) {
+            this.comments = sessionStorage.getItem('contactComments');
         }
     },
     template: `${tplContact}`,
@@ -74,32 +79,34 @@ export const contact = {
         }
     },
     watch: {
+        /* leo en tiempo real los campos llamo a la funcion de validacion y los almaceno */
         nombre(nuevo, viejo) {
             let modelo = 'nombre';
             let mensajealerta = 'Debe completar su Nombre';
             this.validNombre = validaInputConatct(nuevo, modelo, mensajealerta);
-            localStorage.setItem('contactNombre', nuevo);
+            sessionStorage.setItem('contactNombre', nuevo);
         },
         apellido(nuevo, viejo) {
             let modelo = 'apellido';
             let mensajealerta = 'Debe completar su Apellido';
             this.validApellido = validaInputConatct(nuevo, modelo, mensajealerta);
-            localStorage.setItem('contactApellido', nuevo);
+            sessionStorage.setItem('contactApellido', nuevo);
         },
         email(nuevo, viejo) {
             let modelo = 'email';
             let mensajealerta = 'Debe completar su e-mail';
             this.validEmail = validaInputConatct(nuevo, modelo, mensajealerta);
-            localStorage.setItem('contactEmail', nuevo);
+            sessionStorage.setItem('contactEmail', nuevo);
         },
         comments(nuevo, viejo) {
             let modelo = 'comments';
             let mensajealerta = 'Debe dejar un comentario';
             this.validComments = validaInputConatct(nuevo, modelo, mensajealerta);
-            localStorage.setItem('contactComments', nuevo);
+            sessionStorage.setItem('contactComments', nuevo);
         },
     },
     methods: {
+        /* verifica la validacion y envía por WA */
         validateFormContact(e) {
             if (this.validComments & this.validEmail & this.validNombre & this.validApellido) {
                 this.contactarIco = "fas fa-circle-notch fa-spin";
@@ -119,6 +126,7 @@ export const contact = {
         },
     },
     computed: {
+        /* devuelve la url de WA para movile o desktop */
         urlWA() {
             let urlWhatsapp = "#";
             let commentsBr = this.comments.replaceAll(/\r?\n/g, '%0A');
@@ -133,7 +141,7 @@ export const contact = {
     },
 }
 
-
+/* valida los campos de contacto por los patterns */
 function validaInputConatct(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -154,6 +162,7 @@ function validaInputConatct(valor, modelo, mensajealerta) {
     return confirm;
 }
 
+/* devuelve el valor movil true o desktop false */
 function isMobile() {
     if (sessionStorage.desktop)
         return false;

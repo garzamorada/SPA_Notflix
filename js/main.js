@@ -1,18 +1,25 @@
-import { navbar } from "../js/config.js"
-import { barra } from "../js/header.js"
-import { movies } from "../js/peliculas.js"
-import { signup } from "../js/registro.js"
-import { login } from "../js/login.js"
-import { logout } from "../js/logout.js"
-import { options } from "../js/options.js"
-import { contact } from "../js/contact.js"
-import { player } from "../js/player.js"
-import { index } from "../js/home.js"
+/**********************************************/
+/*           COSNTRUCTOR PRINCIPAL            */
+/**********************************************/
 
+/* importo los componentes y la data */
+import { navbar } from "./data/config.js"
+import { barra } from "./components/header.js"
+import { movies } from "./components/peliculas.js"
+import { signup } from "./components/registro.js"
+import { login } from "./components/login.js"
+import { logout } from "./components/logout.js"
+import { options } from "./components/options.js"
+import { contact } from "./components/contact.js"
+import { player } from "./components/player.js"
+import { index } from "./components/home.js"
+
+/* carga los modulos, importa las configuraciones y maneja la pagina actual */
 new Vue({
     created() {
-        if (localStorage.getItem('actual') != null) {
-            this.actual = localStorage.getItem('actual');
+        /* importo los datos de localstorage y sessionStorage */
+        if (sessionStorage.getItem('actual') != null) {
+            this.actual = sessionStorage.getItem('actual');
         }
         let usuario = localStorage.getItem('usuario');
         if (usuario != null) {
@@ -20,6 +27,8 @@ new Vue({
         } else {
             this.logueado = false;
         }
+
+        /* leo los datos de la url */
         var post = window.location.search;
         var parametros = new URLSearchParams(post);
 
@@ -41,8 +50,8 @@ new Vue({
     methods: {
         cambiaPaginaActual(val) {
             this.actual = val;
-            console.log(val)
         },
+        /* pinta de la pagina actual en el menu */
         seleccionado(link) {
             if (this.actual == link) {
                 return 'activa';
@@ -55,6 +64,7 @@ new Vue({
         paginaActual() {
             return `${this.actual}`;
         },
+        /* filtra las paginas del menu para logueado y no logueado */
         filtroItems() {
             if (this.logueado) {
                 return this.items.filter(item => {
@@ -68,8 +78,9 @@ new Vue({
         },
     },
     watch: {
+        /* si cambia el valor de pagina actual lo almacena */
         actual(nuevo, viejo) {
-            localStorage.setItem('actual', nuevo);
+            sessionStorage.setItem('actual', nuevo);
         }
     },
     components: {

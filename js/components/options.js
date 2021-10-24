@@ -1,3 +1,8 @@
+/**********************************************/
+/*       FORMULARIO OPCIONES DE USUARIO       */
+/**********************************************/
+
+
 const tplOptions = `
 <form id="options" class="row g-3 options" action="https://www.w3schools.com/action_page.php" method="POST" target="__blank" v-on:submit="validateFormOptions">
 <div class="col-12 titulo">
@@ -82,6 +87,7 @@ const tplOptions = `
 
 export const options = {
     mounted() {
+        /* lee los datos del usuario en localstorage */
         if (localStorage.getItem('SuscripCorreo') != null) {
             this.SuscripCorreo = localStorage.getItem('SuscripCorreo');
         }
@@ -107,17 +113,19 @@ export const options = {
     template: `${tplOptions}`,
     data: function() {
         return {
+            /* datos por defecto para que no queden vacios */
             SuscripCorreo: null,
             SuscripCelular: null,
-            celular: "",
-            proveedor: "",
-            email: "",
-            password: "",
-            confirmpassword: "",
+            celular: "1112345678",
+            proveedor: "claro",
+            email: "usuario@dmininio.com",
+            password: "12345678",
+            confirmpassword: "12345678",
             confirm: false,
         }
     },
     watch: {
+        /* valida en tiempo real los datos y  los almacena */
         SuscripCorreo(nuevo, viejo) {
             if (nuevo == false) {
                 nuevo = '';
@@ -160,6 +168,7 @@ export const options = {
         },
     },
     methods: {
+        /* valida que el password no este vacío y guarda los datos del formulario */
         validateFormOptions(e) {
             if (this.confirm & this.password != '' & this.password != null); {
                 localStorage.setItem('password', this.password);
@@ -175,7 +184,7 @@ export const options = {
     },
 }
 
-
+/* valida los campos de texto por los parones de pattern */
 function validaInputOptions(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -192,6 +201,7 @@ function validaInputOptions(valor, modelo, mensajealerta) {
     }
 }
 
+/* valida los campos select */
 function validaSelectOptions(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -206,6 +216,7 @@ function validaSelectOptions(valor, modelo, mensajealerta) {
     }
 }
 
+/* verifica que las 2 claves sean iguales */
 function validaConfirmPasswordOptions(valor1, valor2, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];

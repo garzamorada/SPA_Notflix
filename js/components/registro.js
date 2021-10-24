@@ -1,3 +1,8 @@
+/**********************************************/
+/*          FORMULARIO DE REGISTRO            */
+/**********************************************/
+
+
 const tplSignup = `
 <form id="registro" class="row g-3 registro"
 action="https://www.w3schools.com/action_page.php" method="POST" target="__blank" v-on:submit="validateForm">
@@ -116,35 +121,36 @@ action="https://www.w3schools.com/action_page.php" method="POST" target="__blank
 `
 export const signup = {
     mounted() {
-        if (localStorage.getItem('SuscripCorreo') != null) {
-            this.SuscripCorreo = localStorage.getItem('SuscripCorreo');
+        /* leo los datos de sessionstorage */
+        if (sessionStorage.getItem('SuscripCorreo') != null) {
+            this.SuscripCorreo = sessionStorage.getItem('SuscripCorreo');
         }
-        if (localStorage.getItem('SuscripCelular') != null) {
-            this.SuscripCelular = localStorage.getItem('SuscripCelular');
+        if (sessionStorage.getItem('SuscripCelular') != null) {
+            this.SuscripCelular = sessionStorage.getItem('SuscripCelular');
         }
-        if (localStorage.getItem('celular') != null) {
-            this.celular = localStorage.getItem('celular');
+        if (sessionStorage.getItem('celular') != null) {
+            this.celular = sessionStorage.getItem('celular');
         }
-        if (localStorage.getItem('proveedor') != null) {
-            this.proveedor = localStorage.getItem('proveedor');
+        if (sessionStorage.getItem('proveedor') != null) {
+            this.proveedor = sessionStorage.getItem('proveedor');
         }
-        if (localStorage.getItem('email') != null) {
-            this.email = localStorage.getItem('email');
+        if (sessionStorage.getItem('email') != null) {
+            this.email = sessionStorage.getItem('email');
         }
-        if (localStorage.getItem('password') != null) {
-            this.password = localStorage.getItem('password');
+        if (sessionStorage.getItem('password') != null) {
+            this.password = sessionStorage.getItem('password');
         }
-        if (localStorage.getItem('confirmpassword') != null) {
-            this.confirmpassword = localStorage.getItem('confirmpassword');
+        if (sessionStorage.getItem('confirmpassword') != null) {
+            this.confirmpassword = sessionStorage.getItem('confirmpassword');
         }
-        if (localStorage.getItem('nombre') != null) {
-            this.nombre = localStorage.getItem('nombre');
+        if (sessionStorage.getItem('nombre') != null) {
+            this.nombre = sessionStorage.getItem('nombre');
         }
-        if (localStorage.getItem('apellido') != null) {
-            this.apellido = localStorage.getItem('apellido');
+        if (sessionStorage.getItem('apellido') != null) {
+            this.apellido = sessionStorage.getItem('apellido');
         }
-        if (localStorage.getItem('nacimiento') != null) {
-            this.nacimiento = localStorage.getItem('nacimiento');
+        if (sessionStorage.getItem('nacimiento') != null) {
+            this.nacimiento = sessionStorage.getItem('nacimiento');
         }
 
     },
@@ -172,11 +178,14 @@ export const signup = {
         }
     },
     watch: {
+        /* chequeo en tiempo real que los campos cumplan con los patrones y que las claves sean iguales,
+           guardo los datos en sessionstorage */
+
         confirmpassword(nuevo, viejo) {
             let modelo = 'confirmpassword';
             let mensajealerta = 'Las contraseñas no coinciden';
             this.validado1 = validaConfirmPassword(nuevo, this.password, modelo, mensajealerta);
-            localStorage.setItem('confirmpassword', this.confirmpassword);
+            sessionStorage.setItem('confirmpassword', this.confirmpassword);
 
         },
         password(nuevo, viejo) {
@@ -186,37 +195,37 @@ export const signup = {
             let mensajealerta2 = 'Las contraseñas no coinciden';
             this.validado2 = validaInput(nuevo, modelo, mensajealerta);
             this.validado1 = validaConfirmPassword(nuevo, this.confirmpassword, modelo2, mensajealerta2);
-            localStorage.setItem('password', nuevo);
+            sessionStorage.setItem('password', nuevo);
         },
         nombre(nuevo, viejo) {
             let modelo = 'nombre';
             let mensajealerta = 'Debe completar el Nombre';
             this.validado3 = validaInput(nuevo, modelo, mensajealerta);
-            localStorage.setItem('nombre', nuevo);
+            sessionStorage.setItem('nombre', nuevo);
         },
         apellido(nuevo, viejo) {
             let modelo = 'apellido';
             let mensajealerta = 'Debe completar el Apellido';
             this.validado4 = validaInput(nuevo, modelo, mensajealerta);
-            localStorage.setItem('apellido', nuevo);
+            sessionStorage.setItem('apellido', nuevo);
         },
         celular(nuevo, viejo) {
             let modelo = 'celular';
             let mensajealerta = 'Debe completar el celular';
             this.validado5 = validaInput(nuevo, modelo, mensajealerta);
-            localStorage.setItem('celular', nuevo);
+            sessionStorage.setItem('celular', nuevo);
         },
         email(nuevo, viejo) {
             let modelo = 'email';
             let mensajealerta = 'Debe completar un email válido';
             this.validado6 = validaInput(nuevo, modelo, mensajealerta);
-            localStorage.setItem('email', nuevo);
+            sessionStorage.setItem('email', nuevo);
         },
         proveedor(nuevo, viejo) {
             let modelo = 'proveedor';
             let mensajealerta = 'Debe seleccionar un proveedor';
             this.validado7 = validaSelect(nuevo, modelo, mensajealerta);
-            localStorage.setItem('proveedor', nuevo);
+            sessionStorage.setItem('proveedor', nuevo);
         },
         acepta(nuevo, viejo) {
             let modelo = 'acepta';
@@ -227,10 +236,11 @@ export const signup = {
             let modelo = 'nacimiento';
             let mensajealerta = 'Debe completar su fecha de nacimiento';
             this.validado9 = validaDate(nuevo, modelo, mensajealerta);
-            localStorage.setItem('nacimiento', nuevo);
+            sessionStorage.setItem('nacimiento', nuevo);
         },
     },
     methods: {
+        /* valida el formulario y guarda los datos en localstorage */
         validateForm(e) {
             if (this.validado1 &&
                 this.validado2 &&
@@ -259,6 +269,7 @@ export const signup = {
         },
     },
     computed: {
+        /* establece el mínimo de 18 años para el registro */
         hoyMenos18() {
             var fecha = new Date();
             var mes = getMM(fecha);
@@ -278,7 +289,6 @@ export const signup = {
 /* defino minimo 18 años para el registro */
 /******************************************/
 
-
 function getMM(date) {
     let mes = date.getMonth() + 1;
     return mes < 10 ? '0' + mes : '' + mes; // ('' + mes) agrega un 0 si es menor a 10 y convierte a string
@@ -289,6 +299,8 @@ function getDD(date) {
     return dia < 10 ? '0' + dia : '' + dia; // ('' + dia) agrega un 0 si es menor a 10 y convierte a string
 }
 
+
+/* valida los campos de texto por los parones de pattern */
 function validaInput(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -309,6 +321,8 @@ function validaInput(valor, modelo, mensajealerta) {
     return valida;
 }
 
+
+/* verifica que las 2 claves sean iguales */
 function validaConfirmPassword(valor1, valor2, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -327,6 +341,7 @@ function validaConfirmPassword(valor1, valor2, modelo, mensajealerta) {
     return valida;
 }
 
+/* valida los campos select */
 function validaSelect(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -345,6 +360,7 @@ function validaSelect(valor, modelo, mensajealerta) {
     return valida;
 }
 
+/* valida que se haya tildado el checkbox */
 function validaCheckbox(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];
@@ -363,6 +379,7 @@ function validaCheckbox(valor, modelo, mensajealerta) {
     return valida;
 }
 
+/* valida que se haya completado una fecha */
 function validaDate(valor, modelo, mensajealerta) {
     let elemento = document.getElementById(modelo);
     let campo = document.getElementsByName(modelo)[0];

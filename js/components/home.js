@@ -1,3 +1,7 @@
+/**********************************************/
+/*           COSNTRUCTOR DEl HOME             */
+/**********************************************/
+
 const tplIndex = `
 <div class="home">
     <div class="home">
@@ -38,12 +42,14 @@ export const index = {
         }
     },
     methods: {
+        /* links de los botones de login y signup */
         cambiaPagina(pagina) {
             this.$root.actual = pagina;
         },
         cambiaClase(clase) {
             this.clase = clase;
         },
+        /* cambia la cantidad de texto a mostrar en modo movile */
         mostrarMas() {
             if (this.mostrar == '+') {
                 this.mostrar = '-';
@@ -57,12 +63,15 @@ export const index = {
         },
     },
     computed: {
+        /* muestra el texto en modo desktop */
         muestraTodo() {
             return this.texto;
         },
+        /* acorta el texto en modo movile */
         muestraParte() {
             return this.texto.substr(0, this.largo) + this.puntos;
         },
+        /* oculta el link de mostrar + si el texto es corto */
         muestraMas() {
             if (this.texto.length > 256) {
                 return 'mostar';
