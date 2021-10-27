@@ -3,6 +3,7 @@
 /**********************************************/
 
 /* importo los componentes y la data */
+import { MisMetodos } from "./plugins/misMetodos.js"
 import { navbar } from "./data/config.js"
 import { barra } from "./components/header.js"
 import { movies } from "./components/peliculas.js"
@@ -14,6 +15,8 @@ import { contact } from "./components/contact.js"
 import { player } from "./components/player.js"
 import { index } from "./components/home.js"
 
+
+Vue.use(MisMetodos);
 /* carga los modulos, importa las configuraciones y maneja la pagina actual */
 new Vue({
     created() {

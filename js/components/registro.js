@@ -217,8 +217,20 @@ export const signup = {
         },
         email(nuevo, viejo) {
             let modelo = 'email';
-            let mensajealerta = 'Debe completar un email válido';
-            this.validado6 = validaInput(nuevo, modelo, mensajealerta);
+            let elemento = document.getElementById(modelo);
+            let campo = document.getElementsByName(modelo)[0];
+            let patron = campo.getAttribute('pattern');
+            let mensajealerta = 'Debe completar un email válido';            
+            this.validado6 = this.$patronChecker(nuevo, patron);
+            if (this.validado6) {
+                elemento.innerText = 'Todo en orden';
+                elemento.className = 'mostrar ok';
+                campo.className = 'campo campook';
+            } else {
+                elemento.innerText = mensajealerta;
+                elemento.className = 'mostrar alerta';
+                campo.className = 'campo campoalerta';
+            }
             sessionStorage.setItem('email', nuevo);
         },
         proveedor(nuevo, viejo) {
