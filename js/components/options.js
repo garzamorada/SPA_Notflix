@@ -1,3 +1,4 @@
+import { camposOpciones } from "../data/config.js"
 /**********************************************/
 /*       FORMULARIO OPCIONES DE USUARIO       */
 /**********************************************/
@@ -8,78 +9,48 @@ const tplOptions = `
 <div class="col-12 titulo">
     Opciones de Usuario
 </div>
-<div class="col-sm-6 col-xl-3 label"><label>Enviar notificaciones por correo electrónico:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <label class="switch">
-        <input 
-        v-model="SuscripCorreo" 
-        name="SuscripCorreo" type="checkbox" value="on">
-        <span class="slider round"></span>
-    </label>
-</div>
-<div class="col-sm-6 col-xl-3 label"><label>Enviar notificaciones por celular:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <label class="switch">
-        <input 
-        v-model="SuscripCelular" 
-        name="SuscripCelular" type="checkbox" value="on">
-        <span class="slider round"></span>
-    </label>
-</div>
-<div class="col-sm-6 col-xl-3 label"><label>Cambiar correo electrónico:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <input class="campo campodefault" 
-    name="email"
-    v-model="email"
-    pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
-    type="email" 
-    placeholder="e-mail: usuario@dominio.com">
-    <div id="email" class="ok ocultar">Todo ok</div>
-</div>
-<div class="col-sm-6 col-xl-3 label"><label>Cambiar número de celular:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <input class="campo campodefault" 
-    name="celular"
-    v-model="celular"
-    pattern="[0-9]{2,4}-?\s?[0-9]{3,4}-?\s?[0-9]{3,4}"
-    type="tel" 
-    placeholder="Celular (sin 0 y sin 15): 11-4321-6789">
-    <div id="celular" class="ok ocultar">Todo ok</div>
-</div>
-<div class="col-sm-6 col-xl-3 label"><label>Cambiar companía de celular:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <select 
-    class="campo campodefault"
-    v-model="proveedor"
-    name="proveedor">
-        <option selected disabled value="">Proveedor de Telefonía...</option>
-        <option value="Movistar">Movistar</option>
-        <option value="Personal">Personal</option>
-        <option value="Claro">Claro</option>
-        <option value="Otro">Otro</option>
-    </select>
-    <div id="proveedor" class="ok ocultar">Todo ok</div>
-</div>
-<div class="col-sm-6 col-xl-3 label"><label>Cambiar contraseña:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <input 
-    class="campo campodefault" 
-    type="password" 
-    name="password"
-    v-model="password"
-    pattern="[0-9a-zA-Z^\S]{8,}"
-    placeholder="Contraseña">
-    <div id="password" class="ok ocultar">Todo ok</div>
-</div>
-<div class="col-sm-6 col-xl-3 label"><label>Confirmar contraseña nueva:</label></div>
-<div class="col-sm-6 col-xl-3 input">
-    <input class="campo campodefault" type="password" 
-    name="confirmpassword"
-    v-model="confirmpassword"
-    pattern="[0-9a-zA-Z^\S]{8,}"
-    placeholder="Repetir Contraseña">
-    <div id="confirmpassword" class="ok ocultar">Todo ok</div>
-</div>
+<template v-for="campoOpciones in camposOpciones">
+    <template v-if="campoOpciones.tipo == 'checkbox'">
+        <div class="col-sm-6 col-xl-3 label"><label>{{campoOpciones.label}}</label></div>
+        <div class="col-sm-6 col-xl-3 input">
+            <label class="switch">
+                <input 
+                v-model="campoOpciones.value" 
+                :name="campoOpciones.name" 
+                :type="campoOpciones.tipo" value="on">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </template>
+    <template v-else-if="campoOpciones.tipo == 'text' || campoOpciones.tipo == 'tel' || campoOpciones.tipo == 'email' || campoOpciones.tipo == 'password'">
+        <div class="col-sm-6 col-xl-3 label"><label>{{campoOpciones.label}}</label></div>
+        <div class="col-sm-6 col-xl-3 input">
+            <input :class="campoOpciones.claseCampo" 
+            :name="campoOpciones.name"
+            v-model="campoOpciones.value"
+            :pattern="campoOpciones.patron"
+            :type="campoOpciones.tipo" 
+            :placeholder="campoOpciones.placeholder">
+            <div :id="campoOpciones.name" :class="campoOpciones.claseTexto">{{campoOpciones.texto}}</div>
+        </div>
+    </template>
+    <template v-else-if="campoOpciones.tipo == 'select'">
+        <div class="col-sm-6 col-xl-3 label"><label>{{campoOpciones.label}}</label></div>
+        <div class="col-sm-6 col-xl-3 input">
+            <select 
+            :class="campoOpciones.claseCampo" 
+            :name="campoOpciones.name"
+            v-model="campoOpciones.value">
+                <option selected disabled value="">Proveedor de Telefonía...</option>
+                <option value="Movistar">Movistar</option>
+                <option value="Personal">Personal</option>
+                <option value="Claro">Claro</option>
+                <option value="Otro">Otro</option>
+            </select>
+            <div :id="campoOpciones.name" :class="campoOpciones.claseTexto">{{campoOpciones.texto}}</div>
+        </div>
+    </template>
+</template>
 <div class="col-sm-12 col-xl-6 submit"><button name="submit" class="boton " type="submit ">Guardar Cambios</button>
 </div>
 </form>
@@ -89,146 +60,151 @@ export const options = {
     mounted() {
         /* lee los datos del usuario en localstorage */
         if (localStorage.getItem('SuscripCorreo') != null) {
-            this.SuscripCorreo = localStorage.getItem('SuscripCorreo');
+            this.camposOpciones.ObjSuscripCorreo.value = localStorage.getItem('SuscripCorreo');
         }
         if (localStorage.getItem('SuscripCelular') != null) {
-            this.SuscripCelular = localStorage.getItem('SuscripCelular');
+            this.camposOpciones.ObjSuscripCelular.value = localStorage.getItem('SuscripCelular');
         }
-        if (localStorage.getItem('celular') != null) {
-            this.celular = localStorage.getItem('celular');
+        if (localStorage.getItem('Celular') != null) {
+            this.camposOpciones.ObjCelular.value = localStorage.getItem('Celular');
         }
-        if (localStorage.getItem('proveedor') != null) {
-            this.proveedor = localStorage.getItem('proveedor');
+        if (localStorage.getItem('Proveedor') != null) {
+            this.camposOpciones.ObjProveedor.value = localStorage.getItem('Proveedor');
         }
-        if (localStorage.getItem('email') != null) {
-            this.email = localStorage.getItem('email');
+        if (localStorage.getItem('Email') != null) {
+            this.camposOpciones.ObjEmail.value = localStorage.getItem('Email');
         }
-        if (localStorage.getItem('password') != null) {
-            this.password = localStorage.getItem('password');
+        if (localStorage.getItem('Password') != null) {
+            // this.camposOpciones.ObjPassword.value = localStorage.getItem('Password');
         }
-        if (localStorage.getItem('confirmpassword') != null) {
-            this.confirmpassword = localStorage.getItem('confirmpassword');
+        if (localStorage.getItem('ConfirmPassword') != null) {
+            //  this.camposOpciones.ObjConfirmPassword.value = localStorage.getItem('ConfirmPassword');
         }
     },
     template: `${tplOptions}`,
     data: function() {
         return {
             /* datos por defecto para que no queden vacios */
-            SuscripCorreo: null,
-            SuscripCelular: null,
-            celular: "1112345678",
-            proveedor: "Claro",
-            email: "usuario@dominio.com",
-            password: "12345678",
-            confirmpassword: "12345678",
-            confirm: false,
+            camposOpciones: camposOpciones,
         }
     },
     watch: {
         /* valida en tiempo real los datos y  los almacena */
-        SuscripCorreo(nuevo, viejo) {
+        'camposOpciones.ObjSuscripCorreo.value' (nuevo, viejo) {
             if (nuevo == false) {
                 nuevo = '';
             }
             localStorage.setItem('SuscripCorreo', nuevo);
         },
-        SuscripCelular(nuevo, viejo) {
+        'camposOpciones.ObjSuscripCelular.value' (nuevo, viejo) {
             if (nuevo == false) {
                 nuevo = '';
             }
             localStorage.setItem('SuscripCelular', nuevo);
         },
-        confirmpassword(nuevo, viejo) {
-            let modelo = 'confirmpassword';
-            let mensajealerta = 'Las contraseñas no coinciden';
-            this.confirm = validaConfirmPasswordOptions(nuevo, this.password, modelo, mensajealerta);
+        'camposOpciones.ObjConfirmPassword.value' (nuevo, viejo) {
+            this.camposOpciones.ObjConfirmPassword.validado = this.$confirmPasswordChecker(nuevo, this.camposOpciones.ObjPassword.value);
+            if (this.camposOpciones.ObjConfirmPassword.validado) {
+                this.camposOpciones.ObjConfirmPassword.texto = 'todo ok';
+                this.camposOpciones.ObjConfirmPassword.claseTexto = 'mostrar ok';
+                this.camposOpciones.ObjConfirmPassword.claseCampo = 'campo campook';
+            } else {
+                this.camposOpciones.ObjConfirmPassword.texto = this.camposOpciones.ObjConfirmPassword.alerta;
+                this.camposOpciones.ObjConfirmPassword.claseTexto = 'mostrar alerta';
+                this.camposOpciones.ObjConfirmPassword.claseCampo = 'campo campoalerta';
+            }
+            localStorage.setItem('ConfirmPassword', nuevo);
         },
-        password(nuevo, viejo) {
-            let modelo = 'password';
-            let modelo2 = 'confirmpassword';
-            let mensajealerta = 'Complete una contraseña de la menos 8 caracteres sin espacios';
-            let mensajealerta2 = 'Las contraseñas no coinciden';
-            validaInputOptions(nuevo, modelo, mensajealerta);
-            this.confirm = validaConfirmPasswordOptions(nuevo, this.confirmpassword, modelo2, mensajealerta2);
+        'camposOpciones.ObjPassword.value' (nuevo, viejo) {
+            this.camposOpciones.ObjPassword.validado = this.$patronChecker(nuevo, this.camposOpciones.ObjPassword.patron);
+            if (this.camposOpciones.ObjPassword.validado) {
+                this.camposOpciones.ObjPassword.texto = 'todo ok';
+                this.camposOpciones.ObjPassword.claseTexto = 'mostrar ok';
+                this.camposOpciones.ObjPassword.claseCampo = 'campo campook';
+            } else {
+                this.camposOpciones.ObjPassword.texto = this.camposOpciones.ObjPassword.alerta;
+                this.camposOpciones.ObjPassword.claseTexto = 'mostrar alerta';
+                this.camposOpciones.ObjPassword.claseCampo = 'campo campoalerta';
+            }
+            this.camposOpciones.ObjConfirmPassword.validado = this.$confirmPasswordChecker(nuevo, this.camposOpciones.ObjConfirmPassword.value);
+            if (this.camposOpciones.ObjConfirmPassword.validado) {
+                this.camposOpciones.ObjConfirmPassword.texto = 'todo ok';
+                this.camposOpciones.ObjConfirmPassword.claseTexto = 'mostrar ok';
+                this.camposOpciones.ObjConfirmPassword.claseCampo = 'campo campook';
+            } else {
+                this.camposOpciones.ObjConfirmPassword.texto = this.camposOpciones.ObjConfirmPassword.alerta;
+                this.camposOpciones.ObjConfirmPassword.claseTexto = 'mostrar alerta';
+                this.camposOpciones.ObjConfirmPassword.claseCampo = 'campo campoalerta';
+            }
+            localStorage.setItem('Password', nuevo);
         },
-        celular(nuevo, viejo) {
-            let modelo = 'celular';
-            let mensajealerta = 'Debe completar el celular';
-            validaInputOptions(nuevo, modelo, mensajealerta);
+        'camposOpciones.ObjCelular.value' (nuevo, viejo) {
+            this.camposOpciones.ObjCelular.validado = this.$patronChecker(nuevo, this.camposOpciones.ObjCelular.patron);
+            if (this.camposOpciones.ObjCelular.validado) {
+                this.camposOpciones.ObjCelular.texto = 'todo ok';
+                this.camposOpciones.ObjCelular.claseTexto = 'mostrar ok';
+                this.camposOpciones.ObjCelular.claseCampo = 'campo campook';
+            } else {
+                this.camposOpciones.ObjCelular.texto = this.camposOpciones.ObjCelular.alerta;
+                this.camposOpciones.ObjCelular.claseTexto = 'mostrar alerta';
+                this.camposOpciones.ObjCelular.claseCampo = 'campo campoalerta';
+            }
+            localStorage.setItem('Celular', nuevo);
         },
-        email(nuevo, viejo) {
-            let modelo = 'email';
-            let mensajealerta = 'Debe completar un email válido';
-            validaInputOptions(nuevo, modelo, mensajealerta);
+        'camposOpciones.ObjEmail.value' (nuevo, viejo) {
+            this.camposOpciones.ObjEmail.validado = this.$patronChecker(nuevo, this.camposOpciones.ObjEmail.patron);
+            if (this.camposOpciones.ObjEmail.validado) {
+                this.camposOpciones.ObjEmail.texto = 'todo ok';
+                this.camposOpciones.ObjEmail.claseTexto = 'mostrar ok';
+                this.camposOpciones.ObjEmail.claseCampo = 'campo campook';
+            } else {
+                this.camposOpciones.ObjEmail.texto = this.camposOpciones.ObjEmail.alerta;
+                this.camposOpciones.ObjEmail.claseTexto = 'mostrar alerta';
+                this.camposOpciones.ObjEmail.claseCampo = 'campo campoalerta';
+            }
+            localStorage.setItem('Email', nuevo);
         },
-        proveedor(nuevo, viejo) {
-            let modelo = 'proveedor';
-            let mensajealerta = 'Debe seleccionar un proveedor';
-            validaSelectOptions(nuevo, modelo, mensajealerta);
+        'camposOpciones.ObjProveedor.value' (nuevo, viejo) {
+            this.camposOpciones.ObjProveedor.validado = this.$selectChecker(nuevo);
+            if (this.camposOpciones.ObjProveedor.validado) {
+                this.camposOpciones.ObjProveedor.texto = 'todo ok';
+                this.camposOpciones.ObjProveedor.claseTexto = 'mostrar ok';
+                this.camposOpciones.ObjProveedor.claseCampo = 'campo campook';
+            } else {
+                this.camposOpciones.ObjProveedor.texto = this.camposOpciones.ObjProveedor.alerta;
+                this.camposOpciones.ObjProveedor.claseTexto = 'mostrar alerta';
+                this.camposOpciones.ObjProveedor.claseCampo = 'campo campoalerta';
+            }
+            localStorage.setItem('Proveedor', nuevo);
         },
     },
     methods: {
         /* valida que el password no este vacío y guarda los datos del formulario */
         validateFormOptions(e) {
-            if (this.confirm & this.password != '' & this.password != null); {
-                localStorage.setItem('password', this.password);
-                localStorage.setItem('confirmpassword', this.password);
+            if (this.camposOpciones.ObjPassword.value != '' &&
+                this.camposOpciones.ObjPassword.value != null &&
+                this.camposOpciones.ObjPassword.validado &&
+                this.camposOpciones.ObjConfirmPassword.validado); {
+                localStorage.setItem('Password', this.camposOpciones.ObjPassword.value);
+                localStorage.setItem('ConfirmPassword', this.camposOpciones.ObjPassword.value);
             }
-            localStorage.setItem('email', this.email);
-            localStorage.setItem('usuario', this.email);
-            localStorage.setItem('celular', this.celular);
-            localStorage.setItem('proveedor', this.proveedor);
+            if (this.camposOpciones.ObjEmail.value != '' &&
+                this.camposOpciones.ObjEmail.value != null &&
+                this.camposOpciones.ObjEmail.validado); {
+                localStorage.setItem('Email', this.camposOpciones.ObjEmail.value);
+                localStorage.setItem('usuario', this.camposOpciones.ObjEmail.value);
+            }
+            if (this.camposOpciones.ObjCelular.value != '' &&
+                this.camposOpciones.ObjCelular.value != null &&
+                this.camposOpciones.ObjCelular.validado); {
+                localStorage.setItem('Celular', this.camposOpciones.ObjCelular.value);
+            }
+            if (this.camposOpciones.ObjProveedor.value != '' &&
+                this.camposOpciones.ObjProveedor.value != null &&
+                this.camposOpciones.ObjProveedor.validado); {
+                localStorage.setItem('Proveedor', this.camposOpciones.ObjProveedor.value);
+            }
             return true;
-            e.preventDefault();
         },
     },
-}
-
-/* valida los campos de texto por los parones de pattern */
-function validaInputOptions(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let patron = campo.getAttribute('pattern');
-    patron = new RegExp(patron);
-    if (patron.test(valor) || valor == null || valor == '') {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-    }
-}
-
-/* valida los campos select */
-function validaSelectOptions(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    if (valor != '' && valor != null) {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-    }
-}
-
-/* verifica que las 2 claves sean iguales */
-function validaConfirmPasswordOptions(valor1, valor2, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    if (valor1 === valor2) {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        return true
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        return false
-    }
 }

@@ -1,3 +1,4 @@
+import { camposContacto } from "../data/config.js"
 /**********************************************/
 /*          FORMULARIO DE CONTACTO            */
 /**********************************************/
@@ -7,32 +8,40 @@ const tplContact = `
         <div class="col-12 titulo">
             Contactanos con tus preguntas
         </div>
-        <div class="col-sm-6 col-xl-3 label"><label>Nombres:</label></div>
-        <div class="col-sm-6 col-xl-3 input">
-            <input class="campo" name="nombre" v-model="nombre" pattern="^[a-zA-Z ]{2,254}$" type="text" placeholder="Nombres" required>
-            <div id="nombre" class="ok ocultar">Todo ok</div>
-        </div>
-        <div class="col-sm-6 col-xl-3 label"><label>Apellido:</label></div>
-        <div class="col-sm-6 col-xl-3 input">
-            <input class="campo" name="apellido" v-model="apellido" pattern="^[a-zA-Z ]{2,254}$" type="text" placeholder="Apellido" required>
-            <div id="apellido" class="ok ocultar">Todo ok</div>
-        </div>
-        <div class="col-sm-6 col-xl-3 label"><label>Correo electrónico:</label></div>
-        <div class="col-sm-6 col-xl-3 input">
-            <input class="campo" v-model="email" name="email" type="email" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" placeholder="usuario@dominio.com" required>
-            <div id="email" class="ok ocultar">Todo ok</div>
-        </div>
-        <div class="col-sm-6 col-xl-3 label"><label>Ingresa tu mensaje:</label></div>
-        <div class="col-sm-6 col-xl-3 input">
-            <textarea class="campo" rows="5" name="comments" v-model="comments" pattern="^[0-9a-zA-Zá-ü«#$%&/()=*\.\n\r ]{5,512}$" placeholder="Escribí aquí tu comentario" required>
-            </textarea>
-            <div id="comments" class="ok ocultar">Todo ok</div>
-        </div>
+        <template v-for="campoContacto in camposContacto">
+            <template v-if="campoContacto.tipo == 'text' || campoContacto.tipo == 'tel' || campoContacto.tipo == 'email' || campoContacto.tipo == 'password'">
+                <div class="col-sm-6 col-xl-3 label"><label>{{campoContacto.label}}</label></div>
+                <div class="col-sm-6 col-xl-3 input">
+                    <input 
+                    :class="campoContacto.claseCampo" 
+                    :name="campoContacto.name"
+                    v-model="campoContacto.value"
+                    :pattern="campoContacto.patron"
+                    :type="campoContacto.tipo" 
+                    :placeholder="campoContacto.placeholder" required>
+                    <div :id="campoContacto.name" :class="campoContacto.claseTexto">{{campoContacto.texto}}</div>
+                </div>
+            </template>
+            <template v-else-if="campoContacto.tipo == 'textarea'">
+                <div class="col-sm-6 col-xl-3 label"><label>{{campoContacto.label}}</label></div>
+                <div class="col-sm-6 col-xl-3 input">
+                    <textarea  rows="5"
+                    :class="campoContacto.claseCampo"
+                    :name="campoContacto.name" 
+                    v-model="campoContacto.value" 
+                    :pattern="campoContacto.patron"
+                    :placeholder="campoContacto.placeholder"
+                    required>
+                    </textarea>
+                    <div :id="campoContacto.name" :class="campoContacto.claseTexto">{{campoContacto.texto}}</div>
+                </div>
+            </template>
+        </template>
         <div class="col-sm-6 col-xl-3 label">
             <label><i class="fab fa-whatsapp"></i> Enviar por whatsapp: </label>
         </div>
         <div class="col-sm-6 col-xl-3 input">
-            <button class="boton" type="submit" :disabled=disabled value="Contactar"><i :class="contactarIco"></i>{{contactarTxt}}</button>
+            <button class="boton" type="submit" :disabled="disabled" value="Contactar"><i :class="contactarIco"></i>{{contactarTxt}}</button>
         </div>
     </form>
 `
@@ -41,80 +50,102 @@ export const contact = {
     mounted() {
         /* verifica si hay almacenados datos del usuario y los lee */
         if (sessionStorage.getItem('contactEmail') != null) {
-            this.email = sessionStorage.getItem('contactEmail');
-        } else if (localStorage.getItem('email') != null) {
-            this.email = localStorage.getItem('email');
+            this.camposContacto.ObjEmail.value = sessionStorage.getItem('contactEmail');
+        } else if (localStorage.getItem('Email') != null) {
+            this.camposContacto.ObjEmail.value = localStorage.getItem('Email');
         }
         if (sessionStorage.getItem('contactNombre') != null) {
-            this.nombre = sessionStorage.getItem('contactNombre');
-        } else if (localStorage.getItem('nombre') != null) {
-            this.nombre = localStorage.getItem('nombre');
+            this.camposContacto.ObjNombre.value = sessionStorage.getItem('contactNombre');
+        } else if (localStorage.getItem('Nombre') != null) {
+            this.camposContacto.ObjNombre.value = localStorage.getItem('Nombre');
         }
         if (sessionStorage.getItem('contactApellido') != null) {
-            this.apellido = sessionStorage.getItem('contactApellido');
-        } else if (localStorage.getItem('apellido') != null) {
-            this.apellido = localStorage.getItem('apellido');
+            this.camposContacto.ObjApellido.value = sessionStorage.getItem('contactApellido');
+        } else if (localStorage.getItem('Apellido') != null) {
+            this.camposContacto.ObjApellido.value = localStorage.getItem('Apellido');
         }
         if (sessionStorage.getItem('contactComments') != null) {
-            this.comments = sessionStorage.getItem('contactComments');
+            this.camposContacto.ObjComments.value = sessionStorage.getItem('contactComments');
         }
     },
     template: `${tplContact}`,
     data: function() {
         return {
-            nombre: "",
-            apellido: "",
-            email: "",
-            comments: "",
+            camposContacto: camposContacto,
+            disabled: false,
             contactarIco: "fab fa-whatsapp",
             contactarTxt: " Enviar por Whatsapp",
-            disabled: false,
-            validNombre: false,
-            validApellido: false,
-            validEmail: false,
-            validComments: false,
             urlDesktop: "https://web.whatsapp.com/",
             urlMobile: "whatsapp://",
             telefono: "5491159340014",
         }
     },
+    /* leo en tiempo real los campos llamo a la funcion de validacion y los almaceno */
     watch: {
-        /* leo en tiempo real los campos llamo a la funcion de validacion y los almaceno */
-        nombre(nuevo, viejo) {
-            let modelo = 'nombre';
-            let mensajealerta = 'Debe completar su Nombre';
-            this.validNombre = validaInputConatct(nuevo, modelo, mensajealerta);
+        'camposContacto.ObjNombre.value' (nuevo, viejo) {
+            this.camposContacto.ObjNombre.validado = this.$patronChecker(nuevo, this.camposContacto.ObjNombre.patron);
+            if (this.camposContacto.ObjNombre.validado) {
+                this.camposContacto.ObjNombre.texto = 'todo ok';
+                this.camposContacto.ObjNombre.claseTexto = 'mostrar ok';
+                this.camposContacto.ObjNombre.claseCampo = 'campo campook';
+            } else {
+                this.camposContacto.ObjNombre.texto = this.camposContacto.ObjNombre.alerta;
+                this.camposContacto.ObjNombre.claseTexto = 'mostrar alerta';
+                this.camposContacto.ObjNombre.claseCampo = 'campo campoalerta';
+            }
             sessionStorage.setItem('contactNombre', nuevo);
         },
-        apellido(nuevo, viejo) {
-            let modelo = 'apellido';
-            let mensajealerta = 'Debe completar su Apellido';
-            this.validApellido = validaInputConatct(nuevo, modelo, mensajealerta);
+        'camposContacto.ObjApellido.value' (nuevo, viejo) {
+            this.camposContacto.ObjApellido.validado = this.$patronChecker(nuevo, this.camposContacto.ObjApellido.patron);
+            if (this.camposContacto.ObjApellido.validado) {
+                this.camposContacto.ObjApellido.texto = 'todo ok';
+                this.camposContacto.ObjApellido.claseTexto = 'mostrar ok';
+                this.camposContacto.ObjApellido.claseCampo = 'campo campook';
+            } else {
+                this.camposContacto.ObjApellido.texto = this.camposContacto.ObjApellido.alerta;
+                this.camposContacto.ObjApellido.claseTexto = 'mostrar alerta';
+                this.camposContacto.ObjApellido.claseCampo = 'campo campoalerta';
+            }
             sessionStorage.setItem('contactApellido', nuevo);
         },
-        email(nuevo, viejo) {
-            let modelo = 'email';
-            let mensajealerta = 'Debe completar su e-mail';
-            this.validEmail = validaInputConatct(nuevo, modelo, mensajealerta);
+        'camposContacto.ObjEmail.value' (nuevo, viejo) {
+            this.camposContacto.ObjEmail.validado = this.$patronChecker(nuevo, this.camposContacto.ObjEmail.patron);
+            if (this.camposContacto.ObjEmail.validado) {
+                this.camposContacto.ObjEmail.texto = 'todo ok';
+                this.camposContacto.ObjEmail.claseTexto = 'mostrar ok';
+                this.camposContacto.ObjEmail.claseCampo = 'campo campook';
+            } else {
+                this.camposContacto.ObjEmail.texto = this.camposContacto.ObjEmail.alerta;
+                this.camposContacto.ObjEmail.claseTexto = 'mostrar alerta';
+                this.camposContacto.ObjEmail.claseCampo = 'campo campoalerta';
+            }
             sessionStorage.setItem('contactEmail', nuevo);
         },
-        comments(nuevo, viejo) {
-            let modelo = 'comments';
-            let mensajealerta = 'Debe dejar un comentario';
-            this.validComments = validaInputConatct(nuevo, modelo, mensajealerta);
+        'camposContacto.ObjComments.value' (nuevo, viejo) {
+            this.camposContacto.ObjComments.validado = this.$patronChecker(nuevo, this.camposContacto.ObjComments.patron);
+            if (this.camposContacto.ObjComments.validado) {
+                this.camposContacto.ObjComments.texto = 'todo ok';
+                this.camposContacto.ObjComments.claseTexto = 'mostrar ok';
+                this.camposContacto.ObjComments.claseCampo = 'campo campook';
+            } else {
+                this.camposContacto.ObjComments.texto = this.camposContacto.ObjComments.alerta;
+                this.camposContacto.ObjComments.claseTexto = 'mostrar alerta';
+                this.camposContacto.ObjComments.claseCampo = 'campo campoalerta';
+            }
             sessionStorage.setItem('contactComments', nuevo);
         },
     },
     methods: {
         /* verifica la validacion y envía por WA */
         validateFormContact(e) {
-            if (this.validComments & this.validEmail & this.validNombre & this.validApellido) {
+            if (this.camposContacto.ObjComments.validado &&
+                this.camposContacto.ObjEmail.validado &&
+                this.camposContacto.ObjNombre.validado &&
+                this.camposContacto.ObjApellido.validado) {
                 this.contactarIco = "fas fa-circle-notch fa-spin";
                 this.contactarTxt = "";
                 this.disabled = true;
                 setTimeout(() => {
-                    let commentsBr = this.comments.replaceAll(/\r?\n/g, '%0A');
-                    let mensaje = 'send?phone=' + this.telefono + '&text=Nombre :' + this.nombre + ' ' + this.apellido + '%0ACorreo electrónico: ' + this.email + '%0AMensaje:%0A' + commentsBr + ''
                     window.open(this.urlWA, '_blank');
                     this.contactarIco = "fab fa-whatsapp";
                     this.contactarTxt = " Enviar WhatsApp";
@@ -129,8 +160,8 @@ export const contact = {
         /* devuelve la url de WA para movile o desktop */
         urlWA() {
             let urlWhatsapp = "#";
-            let commentsBr = this.comments.replaceAll(/\r?\n/g, '%0A');
-            let mensaje = 'send?phone=' + this.telefono + '&text=Nombre :' + this.nombre + ' ' + this.apellido + '%0ACorreo electrónico: ' + this.email + '%0AMensaje:%0A' + commentsBr + ''
+            let commentsBr = this.camposContacto.ObjComments.value.replaceAll(/\r?\n/g, '%0A');
+            let mensaje = 'send?phone=' + this.telefono + '&text=Nombre :' + this.camposContacto.ObjNombre.value + ' ' + this.camposContacto.ObjApellido.value + '%0ACorreo electrónico: ' + this.camposContacto.ObjEmail.value + '%0AMensaje:%0A' + commentsBr + ''
             if (isMobile()) {
                 urlWhatsapp = this.urlMobile + mensaje;
             } else {
@@ -139,27 +170,6 @@ export const contact = {
             return urlWhatsapp;
         }
     },
-}
-
-/* valida los campos de contacto por los patterns */
-function validaInputConatct(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let patron = campo.getAttribute('pattern');
-    let confirm = false;
-    patron = new RegExp(patron);
-    if (patron.test(valor) || valor == null || valor == '') {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        confirm = true;
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        confirm = false;
-    }
-    return confirm;
 }
 
 /* devuelve el valor movil true o desktop false */

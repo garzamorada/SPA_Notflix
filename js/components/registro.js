@@ -1,3 +1,4 @@
+import { camposRegistro } from "../data/config.js"
 /**********************************************/
 /*          FORMULARIO DE REGISTRO            */
 /**********************************************/
@@ -6,121 +7,78 @@
 const tplSignup = `
 <form id="registro" class="row g-3 registro"
 action="https://www.w3schools.com/action_page.php" method="POST" target="__blank" v-on:submit="validateForm">
-<div class="col-sm-12 titulo">Alta de usuarios</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input 
-    name="nombre"
-    v-model="nombre"
-    pattern="^[a-zA-Zá-ü ]{2,254}$"
-    type="text" class="campo campodefault" placeholder="Nombres"
-        required>
-    <div id="nombre" class="ok ocultar">
-        Debe completar el Nombre
+    <div class="col-sm-12 titulo">Alta de usuarios</div>
+    <div v-for="campoRegistro in camposRegistro" class="col-sm-12 col-md-6 col-xl-4">
+        <template v-if="campoRegistro.tipo == 'text' || campoRegistro.tipo == 'email' || campoRegistro.tipo == 'tel' || campoRegistro.tipo == 'password'">
+            <input 
+            :name="campoRegistro.name"
+            v-model="campoRegistro.value"
+            :pattern="campoRegistro.patron"
+            :type="campoRegistro.tipo" 
+            :class="campoRegistro.claseCampo" 
+            :placeholder="campoRegistro.placeholder"
+            :required="campoRegistro.required">
+            <div :id="campoRegistro.nombre" :class="campoRegistro.claseTexto">
+                {{campoRegistro.texto}}
+            </div>
+        </template>
+        <template v-else-if="campoRegistro.tipo == 'select'">
+            <select 
+            :name="campoRegistro.name"
+            v-model="campoRegistro.value"
+            :pattern="campoRegistro.patron"
+            :type="campoRegistro.tipo" 
+            :class="campoRegistro.claseCampo" 
+            required>
+                <option selected disabled value="">Proveedor de Telefonía...</option>
+                <option value="Movistar">Movistar</option>
+                <option value="Personal">Personal</option>
+                <option value="Claro">Claro</option>
+                <option value="Otro">Otro</option>
+            </select>
+            <div :id="campoRegistro.name" :class="campoRegistro.claseTexto" >
+                {{campoRegistro.texto}}
+            </div>
+        </template>
+        <template v-else-if="campoRegistro.tipo == 'date'">
+            <input
+            :name="campoRegistro.name"
+            v-model="campoRegistro.value"
+            :pattern="campoRegistro.patron"
+            :type="campoRegistro.tipo" 
+            :class="campoRegistro.claseCampo" 
+            :max="hoyMenos18" required>
+            <div :id="campoRegistro.name" :class="campoRegistro.claseTexto">
+                {{campoRegistro.texto}}
+            </div>
+        </template>
+        <template v-else-if="campoRegistro.tipo == 'checkbox'">
+            <div class="form-check ">
+                <span class="contentswitch">
+                    <label class="switch">
+                        <input 
+                        :name="campoRegistro.name"
+                        v-model="campoRegistro.value"
+                        :type="campoRegistro.tipo"
+                        required>
+                        <span class="slider round"></span>
+                    </label>
+                </span>
+                <span class="lavelswitch">Acepto los términos y condiciones</span>
+            </div>
+            <div :id="campoRegistro.name" :class="campoRegistro.claseTexto" >
+                {{campoRegistro.texto}}
+            </div>
+        </template>
     </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input
-    name="apellido"
-    v-model="apellido"
-    pattern="^[a-zA-Zá-ü ]{2,254}$"
-     type="text" class="campo campodefault" placeholder="Apellido"
-        required>
-        <div id="apellido" class="ok ocultar">
-        Debe completar el Apellido
+    <div class="col-sm-6 col-md-6 col-xl-6">
+        <button class="boton" type="submit">Suscribirse</button>
     </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input
-    name="email"
-    v-model="email"
-    pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
-    type="email" class="campo campodefault" placeholder="e-mail: usuario@dominio.com" required>
-    <div id="email" class="ok ocultar">
-        Complete un e-mail válido
-        </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input
-    name="celular"
-    v-model="celular"
-    pattern="[0-9]{2,4}-?\s?[0-9]{3,4}-?\s?[0-9]{3,4}"
-    type="tel" class="campo campodefault"
-        placeholder="Celular (sin 0 y sin 15): 11-4321-6789" required>
-        <div id="celular" class="ok ocultar">
-        Complete un número de teléfono válido
-    </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <select
-    name="proveedor"
-    v-model="proveedor"
-    class="campo campodefault" required>
-        <option selected disabled value="">Proveedor de Telefonía...</option>
-        <option value="Movistar">Movistar</option>
-        <option value="Personal">Personal</option>
-        <option value="Claro">Claro</option>
-        <option value="Otro">Otro</option>
-    </select>
-    <div id="proveedor"class="ok ocultar" >
-        Seleccione su companía de celular
-    </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input
-    name="nacimiento"
-    v-model="nacimiento"
-    type="date" class="campo campodefault" :max="hoyMenos18" required>
-    <div id="nacimiento" class="ok ocultar">
-        Complete una fecha de nacimiento mayor a 18 años
-    </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input 
-    name="password"
-    v-model="password"
-    pattern="[0-9a-zA-Z^\S]{8,}"
-    type="password" class="campo campodefault"
-    placeholder="Contraseña"required>
-    <div id="password" class="ok ocultar">
-        Complete una contraseña de la menos 8 caracteres sin espacios
-    </div>
-</div>
-<div class="col-sm-12 col-md-6 col-xl-4">
-    <input 
-    name="confirmpassword"
-    v-model="confirmpassword"
-    pattern="[0-9a-zA-Z^\S]{8,}"
-    type="password" class="campo campodefault"
-        placeholder="Repetir Contraseña"
-        required>
-        <div id="confirmpassword" class="ok ocultar">
-        Todo ok
-    </div>
-</div>
-<div class="col-sm-6 col-md-6 col-xl-6">
-    <div class="form-check ">
-        <span class="contentswitch">
-            <label class="switch">
-                <input 
-                name="acepta"
-                v-model="acepta"
-                type="checkbox" required>
-                <span class="slider round"></span>
-            </label>
-        </span>
-        <span class="lavelswitch">Acepto los términos y condiciones</span>
-        <div id="acepta" class="ok ocultar">
-            Debe aceptar los términos y condiciones
-        </div>
-    </div>
-</div>
-<div class="col-sm-6 col-md-6 col-xl-6">
-    <button class="boton" type="submit">Suscribirse</button>
-</div>
 </form>
 `
 export const signup = {
     mounted() {
+        console.log(this.camposRegistro);
         /* leo los datos de sessionstorage */
         if (sessionStorage.getItem('SuscripCorreo') != null) {
             this.SuscripCorreo = sessionStorage.getItem('SuscripCorreo');
@@ -128,150 +86,190 @@ export const signup = {
         if (sessionStorage.getItem('SuscripCelular') != null) {
             this.SuscripCelular = sessionStorage.getItem('SuscripCelular');
         }
-        if (sessionStorage.getItem('celular') != null) {
-            this.celular = sessionStorage.getItem('celular');
+        if (sessionStorage.getItem('Celular') != null) {
+            this.camposRegistro.ObjCelular.value = sessionStorage.getItem('Celular');
         }
-        if (sessionStorage.getItem('proveedor') != null) {
-            this.proveedor = sessionStorage.getItem('proveedor');
+        if (sessionStorage.getItem('Proveedor') != null) {
+            this.camposRegistro.ObjProveedor.value = sessionStorage.getItem('Proveedor');
         }
-        if (sessionStorage.getItem('email') != null) {
-            this.email = sessionStorage.getItem('email');
+        if (sessionStorage.getItem('Email') != null) {
+            this.camposRegistro.ObjEmail.value = sessionStorage.getItem('Email');
         }
-        if (sessionStorage.getItem('password') != null) {
-            this.password = sessionStorage.getItem('password');
+        if (sessionStorage.getItem('Password') != null) {
+            // this.camposRegistro.ObjPassword.value = sessionStorage.getItem('Password');
         }
-        if (sessionStorage.getItem('confirmpassword') != null) {
-            this.confirmpassword = sessionStorage.getItem('confirmpassword');
+        if (sessionStorage.getItem('ConfirmPassword') != null) {
+            //  this.camposRegistro.ObjConfirmPassword.value = sessionStorage.getItem('ConfirmPassword');
         }
-        if (sessionStorage.getItem('nombre') != null) {
-            this.nombre = sessionStorage.getItem('nombre');
+        if (sessionStorage.getItem('Nombre') != null) {
+            this.camposRegistro.ObjNombre.value = sessionStorage.getItem('Nombre');
         }
-        if (sessionStorage.getItem('apellido') != null) {
-            this.apellido = sessionStorage.getItem('apellido');
+        if (sessionStorage.getItem('Apellido') != null) {
+            this.camposRegistro.ObjApellido.value = sessionStorage.getItem('Apellido');
         }
-        if (sessionStorage.getItem('nacimiento') != null) {
-            this.nacimiento = sessionStorage.getItem('nacimiento');
+        if (sessionStorage.getItem('Nacimiento') != null) {
+            this.camposRegistro.ObjNacimiento.value = sessionStorage.getItem('Nacimiento');
         }
 
     },
     template: `${tplSignup}`,
     data: function() {
         return {
-            nombre: "",
-            apellido: "",
-            celular: "",
-            proveedor: "",
-            email: "",
-            password: "",
-            confirmpassword: "",
-            nacimiento: "",
-            acepta: "",
-            validado1: false,
-            validado2: false,
-            validado3: false,
-            validado4: false,
-            validado5: false,
-            validado6: false,
-            validado7: false,
-            validado8: false,
-            validado9: false,
+            camposRegistro: camposRegistro,
         }
     },
     watch: {
         /* chequeo en tiempo real que los campos cumplan con los patrones y que las claves sean iguales,
            guardo los datos en sessionstorage */
-
-        confirmpassword(nuevo, viejo) {
-            let modelo = 'confirmpassword';
-            let mensajealerta = 'Las contraseñas no coinciden';
-            this.validado1 = validaConfirmPassword(nuevo, this.password, modelo, mensajealerta);
-            sessionStorage.setItem('confirmpassword', this.confirmpassword);
-
-        },
-        password(nuevo, viejo) {
-            let modelo = 'password';
-            let modelo2 = 'confirmpassword';
-            let mensajealerta = 'Complete una contraseña de la menos 8 caracteres sin espacios';
-            let mensajealerta2 = 'Las contraseñas no coinciden';
-            this.validado2 = validaInput(nuevo, modelo, mensajealerta);
-            this.validado1 = validaConfirmPassword(nuevo, this.confirmpassword, modelo2, mensajealerta2);
-            sessionStorage.setItem('password', nuevo);
-        },
-        nombre(nuevo, viejo) {
-            let modelo = 'nombre';
-            let mensajealerta = 'Debe completar el Nombre';
-            this.validado3 = validaInput(nuevo, modelo, mensajealerta);
-            sessionStorage.setItem('nombre', nuevo);
-        },
-        apellido(nuevo, viejo) {
-            let modelo = 'apellido';
-            let mensajealerta = 'Debe completar el Apellido';
-            this.validado4 = validaInput(nuevo, modelo, mensajealerta);
-            sessionStorage.setItem('apellido', nuevo);
-        },
-        celular(nuevo, viejo) {
-            let modelo = 'celular';
-            let mensajealerta = 'Debe completar el celular';
-            this.validado5 = validaInput(nuevo, modelo, mensajealerta);
-            sessionStorage.setItem('celular', nuevo);
-        },
-        email(nuevo, viejo) {
-            let modelo = 'email';
-            let elemento = document.getElementById(modelo);
-            let campo = document.getElementsByName(modelo)[0];
-            let patron = campo.getAttribute('pattern');
-            let mensajealerta = 'Debe completar un email válido';            
-            this.validado6 = this.$patronChecker(nuevo, patron);
-            if (this.validado6) {
-                elemento.innerText = 'Todo en orden';
-                elemento.className = 'mostrar ok';
-                campo.className = 'campo campook';
+        'camposRegistro.ObjConfirmPassword.value' (nuevo, viejo) {
+            this.camposRegistro.ObjConfirmPassword.validado = this.$confirmPasswordChecker(nuevo, this.camposRegistro.ObjPassword.value);
+            if (this.camposRegistro.ObjConfirmPassword.validado) {
+                this.camposRegistro.ObjConfirmPassword.texto = 'todo ok';
+                this.camposRegistro.ObjConfirmPassword.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjConfirmPassword.claseCampo = 'campo campook';
             } else {
-                elemento.innerText = mensajealerta;
-                elemento.className = 'mostrar alerta';
-                campo.className = 'campo campoalerta';
+                this.camposRegistro.ObjConfirmPassword.texto = this.camposRegistro.ObjConfirmPassword.alerta;
+                this.camposRegistro.ObjConfirmPassword.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjConfirmPassword.claseCampo = 'campo campoalerta';
             }
-            sessionStorage.setItem('email', nuevo);
+            sessionStorage.setItem('ConfirmPassword', nuevo);
+
         },
-        proveedor(nuevo, viejo) {
-            let modelo = 'proveedor';
-            let mensajealerta = 'Debe seleccionar un proveedor';
-            this.validado7 = validaSelect(nuevo, modelo, mensajealerta);
-            sessionStorage.setItem('proveedor', nuevo);
+        'camposRegistro.ObjPassword.value' (nuevo, viejo) {
+            this.camposRegistro.ObjPassword.validado = this.$patronChecker(nuevo, this.camposRegistro.ObjPassword.patron);
+            if (this.camposRegistro.ObjPassword.validado) {
+                this.camposRegistro.ObjPassword.texto = 'todo ok';
+                this.camposRegistro.ObjPassword.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjPassword.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjPassword.texto = this.camposRegistro.ObjPassword.alerta;
+                this.camposRegistro.ObjPassword.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjPassword.claseCampo = 'campo campoalerta';
+            }
+            this.camposRegistro.ObjConfirmPassword.validado = this.$confirmPasswordChecker(nuevo, this.camposRegistro.ObjConfirmPassword.value);
+            if (this.camposRegistro.ObjConfirmPassword.validado) {
+                this.camposRegistro.ObjConfirmPassword.texto = 'todo ok';
+                this.camposRegistro.ObjConfirmPassword.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjConfirmPassword.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjConfirmPassword.texto = this.camposRegistro.ObjConfirmPassword.alerta;
+                this.camposRegistro.ObjConfirmPassword.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjConfirmPassword.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Password', nuevo);
         },
-        acepta(nuevo, viejo) {
-            let modelo = 'acepta';
-            let mensajealerta = 'Debe aceptar los términos y condiciones';
-            this.validado8 = validaCheckbox(nuevo, modelo, mensajealerta);
+        'camposRegistro.ObjNombre.value' (nuevo, viejo) {
+            this.camposRegistro.ObjNombre.validado = this.$patronChecker(nuevo, this.camposRegistro.ObjNombre.patron);
+            if (this.camposRegistro.ObjNombre.validado) {
+                this.camposRegistro.ObjNombre.texto = 'todo ok';
+                this.camposRegistro.ObjNombre.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjNombre.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjNombre.texto = this.camposRegistro.ObjNombre.alerta;
+                this.camposRegistro.ObjNombre.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjNombre.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Nombre', nuevo);
         },
-        nacimiento(nuevo, viejo) {
-            let modelo = 'nacimiento';
-            let mensajealerta = 'Debe completar su fecha de nacimiento';
-            this.validado9 = validaDate(nuevo, modelo, mensajealerta);
-            sessionStorage.setItem('nacimiento', nuevo);
+        'camposRegistro.ObjApellido.value' (nuevo, viejo) {
+            this.camposRegistro.ObjApellido.validado = this.$patronChecker(nuevo, this.camposRegistro.ObjApellido.patron);
+            if (this.camposRegistro.ObjApellido.validado) {
+                this.camposRegistro.ObjApellido.texto = 'todo ok';
+                this.camposRegistro.ObjApellido.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjApellido.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjApellido.texto = this.camposRegistro.ObjApellido.alerta;
+                this.camposRegistro.ObjApellido.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjApellido.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Apellido', nuevo);
+        },
+        'camposRegistro.ObjCelular.value' (nuevo, viejo) {
+            this.camposRegistro.ObjCelular.validado = this.$patronChecker(nuevo, this.camposRegistro.ObjCelular.patron);
+            if (this.camposRegistro.ObjCelular.validado) {
+                this.camposRegistro.ObjCelular.texto = 'todo ok';
+                this.camposRegistro.ObjCelular.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjCelular.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjCelular.texto = this.camposRegistro.ObjCelular.alerta;
+                this.camposRegistro.ObjCelular.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjCelular.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Celular', nuevo);
+        },
+        'camposRegistro.ObjEmail.value' (nuevo, viejo) {
+            this.camposRegistro.ObjEmail.validado = this.$patronChecker(nuevo, this.camposRegistro.ObjEmail.patron);
+            if (this.camposRegistro.ObjEmail.validado) {
+                this.camposRegistro.ObjEmail.texto = 'todo ok';
+                this.camposRegistro.ObjEmail.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjEmail.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjEmail.texto = this.camposRegistro.ObjEmail.alerta;
+                this.camposRegistro.ObjEmail.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjEmail.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Email', nuevo);
+        },
+        'camposRegistro.ObjProveedor.value' (nuevo, viejo) {
+            this.camposRegistro.ObjProveedor.validado = this.$selectChecker(nuevo);
+            if (this.camposRegistro.ObjProveedor.validado) {
+                this.camposRegistro.ObjProveedor.texto = 'todo ok';
+                this.camposRegistro.ObjProveedor.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjProveedor.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjProveedor.texto = this.camposRegistro.ObjProveedor.alerta;
+                this.camposRegistro.ObjProveedor.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjProveedor.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Proveedor', nuevo);
+        },
+        'camposRegistro.ObjAcepta.value' (nuevo, viejo) {
+            this.camposRegistro.ObjAcepta.validado = this.$checkboxChecker(nuevo);
+            if (this.camposRegistro.ObjAcepta.validado) {
+                this.camposRegistro.ObjAcepta.texto = 'todo ok';
+                this.camposRegistro.ObjAcepta.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjAcepta.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjAcepta.texto = this.camposRegistro.ObjAcepta.alerta;
+                this.camposRegistro.ObjAcepta.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjAcepta.claseCampo = 'campo campoalerta';
+            }
+        },
+        'camposRegistro.ObjNacimiento.value' (nuevo, viejo) {
+            this.camposRegistro.ObjNacimiento.validado = this.$dateChecker(nuevo);
+            if (this.camposRegistro.ObjNacimiento.validado) {
+                this.camposRegistro.ObjNacimiento.texto = 'todo ok';
+                this.camposRegistro.ObjNacimiento.claseTexto = 'mostrar ok';
+                this.camposRegistro.ObjNacimiento.claseCampo = 'campo campook';
+            } else {
+                this.camposRegistro.ObjNacimiento.texto = this.camposRegistro.ObjNacimiento.alerta;
+                this.camposRegistro.ObjNacimiento.claseTexto = 'mostrar alerta';
+                this.camposRegistro.ObjNacimiento.claseCampo = 'campo campoalerta';
+            }
+            sessionStorage.setItem('Nacimiento', nuevo);
         },
     },
     methods: {
         /* valida el formulario y guarda los datos en localstorage */
         validateForm(e) {
-            if (this.validado1 &&
-                this.validado2 &&
-                this.validado3 &&
-                this.validado4 &&
-                this.validado5 &&
-                this.validado6 &&
-                this.validado7 &&
-                this.validado8 &&
-                this.validado9) {
-                localStorage.setItem('nacimiento', this.nacimiento);
-                localStorage.setItem('email', this.email);
-                localStorage.setItem('usuario', this.email);
-                localStorage.setItem('nombre', this.nombre);
-                localStorage.setItem('apellido', this.apellido);
-                localStorage.setItem('celular', this.celular);
-                localStorage.setItem('proveedor', this.proveedor);
-                localStorage.setItem('password', this.password);
-                localStorage.setItem('confirmpassword', this.password);
+            if (this.camposRegistro.ObjNombre.validado &&
+                this.camposRegistro.ObjApellido.validado &&
+                this.camposRegistro.ObjEmail.validado &&
+                this.camposRegistro.ObjCelular.validado &&
+                this.camposRegistro.ObjProveedor.validado &&
+                this.camposRegistro.ObjPassword.validado &&
+                this.camposRegistro.ObjConfirmPassword.validado &&
+                this.camposRegistro.ObjNacimiento.validado &&
+                this.camposRegistro.ObjAcepta.validado) {
+                localStorage.setItem('Nacimiento', this.camposRegistro.ObjNacimiento.value);
+                localStorage.setItem('Email', this.camposRegistro.ObjEmail.value);
+                localStorage.setItem('usuario', this.camposRegistro.ObjEmail.value);
+                localStorage.setItem('Nombre', this.camposRegistro.ObjNombre.value);
+                localStorage.setItem('Apellido', this.camposRegistro.ObjApellido.value);
+                localStorage.setItem('Celular', this.camposRegistro.ObjCelular.value);
+                localStorage.setItem('Proveedor', this.camposRegistro.ObjProveedor.value);
+                localStorage.setItem('Password', this.camposRegistro.ObjPassword.value);
+                localStorage.setItem('ConfirmPassword', this.camposRegistro.ObjPassword.value);
                 localStorage.setItem('SuscripCorreo', '');
                 localStorage.setItem('SuscripCelular', '');
                 this.$root.actual = 'login';
@@ -292,7 +290,7 @@ export const signup = {
         },
         alerta(opcion) {
             return opcion;
-        }
+        },
     }
 }
 
@@ -309,104 +307,4 @@ function getMM(date) {
 function getDD(date) {
     let dia = date.getDate();
     return dia < 10 ? '0' + dia : '' + dia; // ('' + dia) agrega un 0 si es menor a 10 y convierte a string
-}
-
-
-/* valida los campos de texto por los parones de pattern */
-function validaInput(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let patron = campo.getAttribute('pattern');
-    patron = new RegExp(patron);
-    let valida = false;
-    if (patron.test(valor)) {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        valida = true;
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        valida = false;
-    }
-    return valida;
-}
-
-
-/* verifica que las 2 claves sean iguales */
-function validaConfirmPassword(valor1, valor2, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let valida = false;
-    if (valor1 === valor2) {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        valida = true;
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        valida = false;
-    }
-    return valida;
-}
-
-/* valida los campos select */
-function validaSelect(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let valida = false;
-    if (valor != '' && valor != null) {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        valida = true;
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        valida = false;
-    }
-    return valida;
-}
-
-/* valida que se haya tildado el checkbox */
-function validaCheckbox(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let valida = false;
-    if (valor === true) {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        valida = true;
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        valida = false;
-    }
-    return valida;
-}
-
-/* valida que se haya completado una fecha */
-function validaDate(valor, modelo, mensajealerta) {
-    let elemento = document.getElementById(modelo);
-    let campo = document.getElementsByName(modelo)[0];
-    let valida = false;
-
-    if (valor != null && valor != '') {
-        elemento.innerText = 'Todo en orden';
-        elemento.className = 'mostrar ok';
-        campo.className = 'campo campook';
-        valida = true;
-    } else {
-        elemento.innerText = mensajealerta;
-        elemento.className = 'mostrar alerta';
-        campo.className = 'campo campoalerta';
-        valida = false;
-    }
-    return valida;
 }
