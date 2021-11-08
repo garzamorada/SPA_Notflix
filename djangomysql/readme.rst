@@ -1,1 +1,0 @@
-You can read tutorial https://www.roytuts.com/docker-compose-dockerizing-django-mysql-app/
